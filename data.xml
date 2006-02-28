@@ -1,0 +1,3688 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<sql>
+		<query>
+			create table #__categories(
+				id int unsigned not null auto_increment,
+				name text not null,
+				description text not null,
+				parent int unsigned not null default 0,
+				moderator text not null,
+				icon varchar(50) not null,
+				status int(1) not null default 1,
+				KEY parent (parent),
+				KEY status (status),
+				PRIMARY KEY(id)
+			);
+		</query>
+		<query>
+			create table #__comments(
+				id int unsigned not null auto_increment,
+				`post id` int unsigned not null,
+				`user id` int unsigned not null,
+				author tinytext not null,
+				content text not null,
+				email varchar(255) not null,
+				url varchar(200) not null,
+				ip varchar(50) not null,
+				time int unsigned not null,
+				status int(1) not null,
+				KEY `post id` (`post id`),
+				KEY `user id` (`user id`),
+				KEY email (email),
+				KEY status (status),
+				PRIMARY KEY(id)
+			);
+		</query>
+		<query>
+			create table #__configuration(
+				name varchar(255) not null,
+				value longtext not null,
+				primary key(name)
+			);
+		</query>
+		<query>
+			create table #__links(
+				id int unsigned not null auto_increment,
+				name varchar(255) not null,
+				url varchar(255) not null,
+				description text not null,
+				creator varchar(255) not null,
+				`time` int unsigned not null default 0,
+				count int unsigned not null default 0,
+				view int unsigned not null default 0,
+				`type` int(1) not null default 0,
+				status int(1) not null default 1,
+				KEY `type` (`type`),
+				KEY status (status),
+				PRIMARY KEY(id)
+			);
+		</query>
+		<query>
+			create table #__messages(
+				id int unsigned not null auto_increment,
+				`type` int(1) not null default 0,
+				`delete` int(1) not null default 0,
+				`from` int unsigned not null default 0,
+				`to` int unsigned not null default 0,
+				`time` int unsigned not null default 0,
+				subject varchar(120) not null,
+				content longtext not null,
+				author tinytext,
+				email varchar(255),
+				url varchar(200),
+				ip varchar(50) not null,
+				KEY `type` (`type`),
+				KEY `delete` (`delete`),
+				KEY `from` (`from`),
+				KEY `to` (`to`),
+				KEY ip (ip),
+				PRIMARY KEY(id)
+			);
+		</query>
+		<query>
+			create table #__plugins(
+				id int unsigned not null auto_increment,
+				source longtext not null,
+				type varchar(4) not null,
+				status int(1) not null,
+				KEY status (status),
+				PRIMARY KEY(id)
+			);
+		</query>
+		<query>
+			create table #__polls(
+				id int unsigned not null auto_increment,
+				question text not null,
+				answers text not null,
+				votes text not null,
+				ips longtext not null,
+				time int unsigned not null,
+				status int(1) not null,
+				PRIMARY KEY(id)
+			);
+		</query>
+		<query>
+			create table #__posts(
+				id int unsigned not null auto_increment,
+				title tinytext not null,
+				content longtext not null,
+				author int unsigned not null,
+				category int unsigned not null default 1,
+				date datetime not null,
+				modify text not null,
+				ratings tinytext,
+				view int unsigned not null default 0,
+				`rate status` int(1) not null default 1,
+				`comment status` int(1) not null default 1,
+				status int(1) not null default 1,
+				KEY author (author),
+				KEY category (category),
+				KEY `rate status` (`rate status`),
+				KEY `comment status` (`comment status`),
+				KEY status (status),
+				PRIMARY KEY(id)
+			);
+		</query>
+		<query>
+			create table #__themes(
+				id int unsigned not null auto_increment,
+				main longtext not null,
+				comment longtext not null,
+				post longtext not null,
+				contact longtext not null,
+				guestbook longtext not null,
+				`link registration` longtext not null,
+				profile longtext not null,
+				membership longtext not null,
+				emoticons longtext not null,
+				login longtext not null,
+				`control panel` longtext not null,
+				style longtext not null,
+				script longtext not null,
+				`php script` longtext not null,
+				PRIMARY KEY (id)
+			) engine=MyISAM;
+		</query>
+		<query>
+			create table #__users(
+				id int unsigned not null auto_increment,
+				username varchar(30) not null,
+				password varchar(32) not null,
+				`first name` tinytext not null,
+				`last name` tinytext not null,
+				nickname tinytext not null,
+				birthday datetime not null,
+				gender int(1) not null default 0,
+				marriage int(1) not null default 0,
+				eduction text not null,
+				vocation text not null,
+				amusement text not null,
+				favorite text not null,
+				about text not null,
+				avatar varchar(200) not null,
+				signature text not null,
+				location text not null,
+				phone varchar(20) not null,
+				email varchar(255) not null,
+				url varchar(200) not null,
+				aim varchar(50) not null default '',
+				gmail varchar(75) not null default '',
+				icq varchar(10) not null default '',
+				msn varchar(75) not null default '',
+				yahoo varchar(50) not null default '',
+				visible int(1) not null default 1,
+				`date format` varchar(15) not null default 'l j F Y',
+				`time format` varchar(15) not null default 'g:i A',
+				`time zone` varchar(5) not null default +3.5,
+				`start of week` INT(1) not null default 6,
+				theme int unsigned not null default 0,
+				ip varchar(50) not null,
+				`last login ip` varchar(50) not null,
+				registered int unsigned not null,
+				`last login` int unsigned not null,
+				`time online` int unsigned not null default 0,
+				level int unsigned not null default 1,
+				status int(1) not null default 1,
+				KEY username (username),
+				KEY email (email),
+				KEY birthday (birthday),
+				KEY level (level),
+				PRIMARY KEY (id)
+			);
+		</query>
+		<query>
+			insert into #__links(name, url, creator) values('Raha', 'https://raha.group', 1);
+		</query>
+		<query>
+			insert into #__categories(name, description, icon) values('بدون دسته‌بندي', 'عمومي', 'images/categories/main.gif');
+		</query>
+	</sql>
+	<theme>
+		<item name="main"><![CDATA[<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>.:|[site title separator]|:.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=[site charset]">
+<meta http-equiv="Content-Script-Type" content="text/JavaScript">
+<meta http-equiv="Content-Language" content="Fa">
+<meta http-equiv="designer" content="Mahdi Nezarati Zadeh">
+<meta name="description" content="[site description]">
+<meta name="keywords" content="[site keywords]">
+<meta name="generator" content="[site generator]">
+<meta name="author" content="[site author]">
+<meta name="copyright" content="Allright Reserved by [site name] 2007">
+<meta name="distrubution" content="global">
+<meta name="geo.country" content="ir">
+<meta name="robots" content="index,follow,all,noarchive">
+<link rel="alternate" type="application/rss+xml" title="[site title]" href="[rss]" />
+<link rel="alternate" type="application/rss+xml" title="[site title]'s Comment" href="[comments rss]" />
+<link rel="alternate" type="application/rss+xml" title="[site title]'s Blogroll" href="[link rss]" />
+<link rel="alternate" type="application/rdf+xml" title="[site title]" href="[rdf]" />
+<link rel="alternate" type="application/atom+xml" title="[site title]" href="[atom]" />
+<link rel="alternate" type="application/opml+xml" title="[site title]" href="[opml]" />
+<link rel="alternate" type="application/opml+xml" title="[site title]'s Blogroll" href="[link opml]" />
+<link rel="archives" title="[site title]'s Members" href="[member list]" /><archives>
+<link rel="archives" title="[date]" href="[url]" /></archives>
+<link rel="stylesheet" href="[style]" type="text/css" />
+<script src="[script]" type="text/javascript"></script>
+<script src="[main script]" type="text/javascript"></script>
+</head>
+<body bgColor="#bfd1dd" background="images/themes/silver/back ground.gif">
+<table border="0" cellpadding="0" cellspacing="0" width="920" height="543" align="center">
+	<tr>
+		<td valign="top" colspan="3" height="85">
+<table cellpadding="0" cellspacing="0" width="901" height="100">
+	<tr>
+		<td width="901" valign="top" align="center">
+			<embed src="menu.swf" name="menu" menu="false" quality="high" bgcolor="#FFFFFF" width="780" height="117" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" wmode="transparent"><p>
+		</td>
+	</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" width="175" class="sidebar">
+<h1>لوگو</h1><ul>
+<img src="[logo]" title="[site description]"><br />
+<input class="input" id="logo" value='<script src="[logo url]"></script>'><img src="images/themes/silver/copy.gif" class="btn" title="کپي کد" onClick="copy('logo');"><br />
+لطفا براي حمايت از ما آدرس لوگوي سايت را در سايت خود قرار دهيد.
+</ul><h2></h2>
+<advertisment block><h1>تبليغات</h1><ul>
+<advertisment>
+<table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%" style="border: #cfdce8 1px solid" dir="rtl" bgcolor="#f6f8f9">
+	<tbody>
+		<tr>
+			<td style="font-size: 11px; color: #595959; line-height: 150%; font-family: tahoma">
+			<table border="0" cellspacing="2" cellpadding="2" width="100%" height="100%" dir="rtl">
+				<tbody>
+					<tr>
+						<td height="21" style="font-size: 11px; color: #595959; line-height: 150%; font-family: tahoma"><span style="cursor: hand; color: #1f6b94; line-height: 130%"><a href="[url]" target="_blank"><span style="color: #1f6b94">[name]</span></a></span></td>
+					</tr>
+					<tr>
+						<td valign="top" style="font-size: 11px; color: #595959; line-height: 150%; font-family: tahoma">
+						<div align="justify" style="line-height: 130%">
+						<a title="مشاهده: [view]، کليک: [count]" href="[url]" target="_blank"><span style="color: #595959">[description]</span></a>
+						</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td height="13" valign="top" style="font-size: 11px; color: #595959; line-height: 150%; font-family: tahoma" bgcolor="#cfdce8">
+			<div align="left" title="تبليغات شما در [site title]" onClick="document.location='[contact]'" style="font-size: 10px; cursor: hand; color: #1f6b94; line-height: 120%">
+			&nbsp;Ads by [site name]
+			</div>
+			</td>
+		</tr>
+	</tbody>
+</table><br />
+</advertisment>
+</ul><h2></h2></advertisment block>
+<h1>پيوندها</h1><ul>
+<link block><marquee id="linkbox" height="80" width="162" direction="up" scrollamount="1" scrolldelay="20" onmouseover="stop();" onmouseout="start();" style="text-align: center">
+<link><a href="[url]" title="[description]" onmouseover="window.status='ارسال شده در [date] و ساعت [time]';return true" title="[description]" onmouseout="self.status=''" href="[url]" target=_blank>[name] ([view]/[count])</a><br /></link></marquee>
+<span style="cursor: hand; font-weight: bold">
+<span onmouseover="linkbox.scrollDelay=10;linkbox.direction='Down';linkbox.start()" onmouseout="linkbox.scrollDelay=20">▼</span>
+<span onmouseover="linkbox.stop()">ιι</span>
+<span onmouseover="linkbox.scrollDelay=10;linkbox.direction='up';linkbox.start()" onmouseout="linkbox.scrollDelay=20">▲</span>
+</span><br /></link block><input class="input" id="linkcode" value='<script src="[linkbox]" language="javascript" type="text/javascript"></script>'><img src="images/themes/silver/copy.gif" class="btn" title="کپي کد" onClick="copy('linkcode');" /><br />
+<br />اگر مايل به تبادل لينک هستين منو با عنوان "[site title]" لينک کنيد و بعد روي <a href="javascript:void(0)" onClick="javascript:window.open('[link registration]','newLink','status=yes, scrollbars=yes, width=300, height=290')">اينجا</a> کليک کنيد و لينک خودتونو اضافه کنيد.
+</ul><h2></h2>
+<h1>جستجو</h1><ul>
+<search>[search value=(20)]<br />[submit value=(جستجو)]</search>
+</ul><h2></h2>
+<h1>خبرنامه</h1><ul>
+<newsletter><table cellSpacing="0" border="0" width="90%" align="center">
+	<tr>
+		<td>ايميل</td>
+		<td>[email value=(20)]</td>
+	</tr>
+	<tr>
+		<td colspan="2">[subscription value=(عضويت)] [unsubscription value=(لغو عضويت)]</td>
+	</tr>
+	<tr align="center">
+		<td colspan="2">[submit value=(انجام عمليات)]</td>
+	</tr>
+	<tr align="center">
+		<td colspan="2">[result]</td>
+	</tr>
+</table></newsletter>
+</ul><h2></h2>
+<poll><h1>نظر سنجي</h1><ul>
+<main>[question]<br />
+<answer><input type="radio" value="[id]" name="answer" class="radiobutton">[answer]<br /></answer>
+[submit value=(ثبت راي)]<br /><br /><a title="نمايش نتيجه ي نظر سنجي" target="_self" href="[url]" >کل آرا: [total votes]</a><br />[result]</main>
+<result>نتيحه ي راي گيري<br />[question]<br /><br />
+<table width=100%>
+<reply><tr>
+	[answer]<small>([score]%)</small><br /><img src="images/themes/silver/poll/start.gif" height="10" width="2" /><img src="images/themes/silver/poll/bar.gif" height="10" width="[score]" title="[answer] -> [score]% ([vote] راي از [total votes])" /><img src="images/themes/silver/poll/end.gif" height="10" width="2" />
+</tr></reply>
+<br /><br />نتيجه‌ي نظر سنجي از [total votes] راي</a></table></result>
+</ul><h2></h2></poll>
+<h1>پوسته‌ها</h1><ul>
+<theme><main><a href="[url]" title="[description]">[name] ([version])</a><br /></main><select><li><a href="[url]" title="[description]">[name] ([version])</a></li><br /></select></theme>
+</ul><h2></h2>
+<h1>جزئيات</h1><ul>
+امروز: [site date]<br />
+تاريخ ايجاد: [create site date]<br />
+<counter>
+بازديد امروز: [today]<br />
+بازديد ديروز: [yesterday]<br />
+افراد آنلاين: <span title="<max online>بيشترين افراد آنلاين: [count]
+در تاريخ [date] و ساعت [time]</max online>">[online]</span><br />
+کل بازديد ها: <span title="<max visit>بيشترين بازديد: [count]
+در تاريخ [date] و ساعت [time]</max visit>">[total]</span><br /></counter><total>
+کل مطالب: [post]<br />
+کل نظرات: [comment]<br />
+کل يادبودها: [memory]<br />
+کل لينک ها: [link]<br />
+کل تبليغ ها: [advertisment]<br />
+کل عضو ها: [user]<br />
+کل نظر سنجي ها: [poll]<br /></total>
+ايجاد صفحه: [page generation] ثانيه
+</ul><h2></h2>
+</td>
+		<td valign="top" width="570" align="center" dir="rtl">
+<announcement><div id="window" style="width: 99%"><div id="upcenter"><div id="upleft"><div id="upright"><div id="title" style="text-align: right">اعلان: [title]</div></div></div></div><div id="body" style="text-align: right">
+<img border="0" src="images/themes/silver/announcement.gif" title="اعلان" />[content]
+</div><div id="downcenter"><div id="downleft"><div id="downright"></div></div></div></div><br /></announcement>
+<link dump block><div id="window" style="width: 99%"><div id="upcenter"><div id="upleft"><div id="upright"><div id="title" style="text-align: right">پيوندهاي روزانه</div></div></div></div><div id="body" style="text-align: right">
+<link dump><a href="[url]" title="[description]">[name] ([view]/[count])</a><br /></link dump>
+</div><div id="downcenter"><div id="downleft"><div id="downright"></div></div></div></div><br /></link dump block>
+<post>
+<div id="post[id]">
+<table border="0" cellpadding="0" style="border-collapse: collapse; font-family: tahoma; font-size: 8pt; width: 99%">
+	<tr>
+	<td width="4%" height="23" style="background-image: url('images/themes/silver/post up right.gif'); background-repeat: no-repeat right"></td>
+	<td height="23" style="background-image: url('images/themes/silver/post up center.gif'); background-repeat: repeat-x"><div id="post-title-[id]">[title]</div></td>
+		<td height="23" style="background-image: url('images/themes/silver/post up center.gif'); background-repeat: repeat-x"><div align="left">[date]</div></td>
+		<td width="4%" height="23" style="background-image: url('images/themes/silver/post up left.gif'); background-repeat: no-repeat left"></td>
+	</tr>
+	<tr>
+		<td colspan="4" style="border-left: 1px solid #C8C6C6; border-right: 1px solid #C8C6C6; border-top: 1px solid #C8C6C6; padding: 5px; color: #000000; background-color: #FFFFFF; font-family: tahoma; font-size: 9pt" valign="top"><div id="post-content-[id]" class="post">[content]<more><br /><a href="javascript:void(0)" onclick="request('do=postMoreContent&id=[id]', 'post-content-[id]')"><img border="0" src="images/themes/silver/more.gif">ادامه ي مطلب</a></more></div></td>
+	</tr>
+	<tr>
+		<td colspan="4" style="border-left: 1px solid #C8C6C6; border-right:1px solid #C8C6C6; border-bottom:1px solid #C8C6C6; padding:2px; color: #666666; background-color: #FFFFFF; font-family: Tahoma; font-size:7pt" valign="top">
+		<author>[<img border="0" src="images/themes/silver/author.gif" />نوشته شده توسط <a href="mailto:[email]" title="[url]">[name]</a>]</author>
+		[<img border="0" src="images/themes/silver/time.gif" />ساعت [time]] 
+		<category>[<img border="0" src="images/themes/silver/category.gif" />موضوع: <a href="[url]" title="[description]">[name]</a>]</category>
+		[<img border="0" src="images/themes/silver/view.gif" />مشاهده: [view]]<br />
+		<comment>[<img border="0" src="images/themes/silver/comment.gif" /><a href="javascript:void(0)" onClick="javascript:window.open('[url]','comments','status=yes,scrollbars=yes,toolbar=no,menubar=no,location=no ,width=457px,height=500px')">نظر ([count])</a> ]</comment>
+		[<a href="javascript:void(0)" onClick="javascript:postMail('post-title-[id]', 'post-content-[id]');"><img src="images/themes/silver/post mail.jpg" title="پست ميل" /></a> <a href="[download]" title="ذخيره کردن اين مطلب"><img src="images/themes/silver/save.gif" /></a> <a href="[url]" title="لينک اين مطلب"><img src="images/themes/silver/link.gif" /></a> <a href="[rss]" title="RSS"><img src="images/themes/silver/feed.gif" /></a> <a href="[rdf]" title="RDF"><img src="images/themes/silver/feed.gif" /></a> <a href="[atom]" title="ATOM"><img src="images/themes/silver/feed.gif" /></a> <a href="[opml]" title="OPML"><img src="images/themes/silver/feed.gif" /></a>]
+		<last edit>[<img border="0" src="images/themes/silver/last edit.jpg" />آخرين ويرايش [date] ودر ساعت [time]]</last edit>
+		<modify>[<img border="0" src="images/themes/silver/modify.gif" title="ويرايش" onclick="return sendXMLHttpRequest('[url]', 'GET', 'post[id]')" /> <img border="0" src="images/themes/silver/delete.gif" title="حذف" onclick="return ADI('do=delete_post&id=[id]', 'post[id]' ,'آيا مطمئن از حذف مطلب [title] هستيد؟')" />]</modify>
+		<rate><script>rate.ratings([id], [votes]);</script></rate>
+	</tr>
+</table>
+<table border="0" cellpadding="0" style="border-collapse: collapse" width="99%">
+	<tr height="22">
+		<td width="8" style="background-image: url('images/themes/silver/post down right.gif'); background-repeat: no-repeat right"></td>
+		<td colspan="2" height="22" style="background-image: url('images/themes/silver/post down center.gif'); background-repeat: repeat-x"></td>
+		<td width="8" style="background-image: url('images/themes/silver/post down left.gif'); background-repeat: no-repeat left"></td>
+	</tr>
+</table>
+<br />
+</div>
+</post>
+</td>
+		<td valign="top" height="419" width="175" class="sidebar">
+<h1>[site title]</h1><ul>
+<table cellSpacing="0" border="0" width="90%" align="center">
+	<tr align="center">
+		<td><a onClick="this.style.behavior='url(#default#homepage)';this.setHomePage('[site url]');" href="javascript:void(0)"><img src="images/themes/silver/home page.jpeg" title="اين سايت را صفحه ي خانگي کنيد!" /></a></td>
+		<td><a href="javascript:window.external.AddFavorite('http://[site url]',' [site title] ')"><img src="images/themes/silver/add favorites.jpeg" title="اين سايت را به صفحات مورد علاقه تان اضافه کنيد!" /></a></td>
+		<td><a href="mailto:[site email]"><img src="images/themes/silver/mail.gif" title="پست الکترونيک!" /></a></td>
+		<td><a href="[site url]"><img border="0" src="images/themes/silver/home.gif" title="صفحه نخست!" /></a></td>
+	</tr>
+	<tr align="center">
+		<td><a onClick="window.open('[contact]','_blank','width=400, height=425, status=yes, scrollbars=yes, resizable=yes');" href="javascript:void(0)"><img src="images/themes/silver/contact.jpeg" title="تماس با ما!" /></a></td>
+		<td><a onClick="window.open('[guestbook]','_blank','width=457, height=500, status=yes, scrollbars=yes, resizable=yes');" href="javascript:void(0)"><img src="images/themes/silver/guestbook.gif" title="دفتر يادبود!" /></a></td>
+		<td><a href="[membership]"><img src="images/themes/silver/membership.gif" title="عضويت در سايت!" /></a></td>
+		<td><img src="images/themes/silver/forum.gif" class="disabled" title="انجمن گفتگو!"></td>
+	</tr>
+	<tr align="center">
+		<td><a href="[rss]"><img src="images/themes/silver/feed/rss.gif" /></a></td>
+		<td><a href="[rdf]"><img src="images/themes/silver/feed/rdf.gif" /></a></td>
+		<td><a href="[atom]"><img src="images/themes/silver/feed/atom.gif" /></a></td>
+		<td><a href="[opml]"><img src="images/themes/silver/feed/opml.gif" /></a></td>
+	</tr>
+</table>
+</ul><h2></h2>
+<h1>آرشيو موضوعي</h1><ul style="text-align:right">
+[site category]
+</ul><h2></h2>
+<h1>تقويم</h1><ul>
+[site calendar]
+</ul><h2></h2>
+<last post block><h1>نوشته‌هاي پيشين</h1><ul>
+<last post><a href="[url]" title="مشاهده: [view]، نظر: [comment]">[title]</a><br /></last post>
+</ul><h2></h2></last post block>
+<h1>مؤلف‏ها</h1><ul id=user>
+<author><a href="[profile]"<status> class=<online>online</online><offline>offline</offline></status> title="نمايش مشخصات [username]"></a><a href="[post url]" title="[email]">[name]([count post])</a><br /></author>
+</ul><h2></h2><log in>
+<h1>ورود</h1><ul style="text-align:right">
+<table cellSpacing="0" width="100%">
+	<tr>
+		<td>نام کاربري</td>
+		<td>[username value=(12)]</td>
+	</tr>
+	<tr>
+		<td>کلمه ي عبور</td>
+		<td>[password value=(12)]</td>
+	</tr>
+	<tr>
+		<td>کد امنيتي</td>
+		<td>[security code field] [security code]</td>
+	</tr>
+	<tr align="center">
+		<td colspan="2">[remember value=(مرا به خاطر بسپار)]</td>
+	</tr>
+	<tr align="center">
+		<td>[submit value=(ورود)]</td>
+		<td><input type="button" onClick="document.location='[membership]'" value="عضويت" class="button" /></td>
+	</tr>
+	<tr align="center">
+		<td colspan="2">[result]</td>
+	</tr>
+</table>
+</ul><h2></h2></log in><loged in>
+<h1>وضعيت شما</h1><ul style="text-align:right">
+<avatar><center><img border="0" src="[url]"></center></avatar>
+[username] خوش آمديد.<br /><state>
+<comment>نظرات تاييد نشده: [inactive]<br />
+نظرات خصوصي جديد: [private]<br /></comment>
+<guestbook>يادبودهاي تاييد نشده: [inactive]<br />
+يادبودهاي خصوصي جديد: [private]<br /></guestbook>
+<message>پيام‌هاي جديد: [new]<br /></message>
+<link>لينک‌هاي تاييد نشده: [inactive]<br /></link>
+</state><a href="[control panel]">ورود به کنترل پنل</a><br />
+<a href="[log out]">خروج</a>
+</ul><h2></h2></loged in>
+</td>
+	</tr>
+	<tr>
+		<td valign="top" colspan="3" height="50" id="footer">
+			<div id="left">
+				<div id="center">
+					<div id="right">
+						<div id="body">
+							رفتن به صفحه (<page><main><a href="[url]"> [page] </a></main><select><a href="[url]"> <b>[page]</b> </a></select></page>)
+						</div>
+					</div>
+				</div>
+			</div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>]]></item>
+		<item name="comment"><![CDATA[<html>
+<head>
+<title>نظرات</title>
+<meta http-equiv="content-type" content="text/html; charset=[site charset]" />
+<link rel="stylesheet" href="[style]" type="text/css" />
+<script src="[script]"></script>
+<script src="[main script]"></script>
+</head>
+<body leftmargin=5 topmargin=5>
+<div align=center>
+<table style="border-collapse: collapse" bordercolor=#b0c2d9 height=489 cellpadding=0 width=430 border=1>
+	<tbody>
+		<tr>
+			<td bordercolor=#b0c2d9 background="images/themes/silver/comment bg.gif" height=95>
+				<div style="font-size: 8pt; text-align: center; font-weight: bold; color: #ffffff; margin:15 0 0 0">[site name] Comment System</div>
+				<div style="margin: 30 0 0 0; background-image: url('images/themes/silver/header.gif'); background-repeat: repeat-x; width: 100%; height: 42"></div>
+			</td>
+		</tr>
+		<tr>
+	<td dir=rtl bordercolor=#819bcf height=392>
+		<table cellspacing=0 cellpadding=0 width="99%" border=0>
+			<tbody>
+				<tr>
+					<td width=8> </td>
+					<td>
+						<div class=comments-head><p dir=ltr align=center>عنوان ارسال: [post title]<br />تاريخ ارسال: [post date]<br />نويسنده: [post author]<br />نظرات خصوصي: [count private]</p></div>
+						<comment>
+						<table dir=rtl style="border-collapse: collapse" bordercolor=#b0c2d9 cellspacing=0 cellpadding=0 width="100%" border=1>
+							<tbody>
+								<tr>
+									<td background="images/themes/silver/menu up center.gif">
+										<table dir=rtl cellspacing=0 cellpadding=0 width=410 border=0>
+											<tbody>
+												<tr>
+													<td width=10> </td>
+													<td width=192><p dir=ltr align="right">نويسنده: [author]</p></td>
+													<td width=203><p dir=ltr style="direction: ltr; text-align: left">
+														<url><a href="[url]" target="_blank"><img src="images/themes/silver/site.gif" border="0" title="آدرس اينترنتي اين کاربر" /></a></url> <email><a href="mailto:[email]"><img src="images/themes/silver/email.gif" border="0" title="ارسال ايميل به اين کاربر" /></a></email></p>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<table dir=rtl cellspacing=0 cellpadding=0 width=410 border=0>
+											<tbody>
+												<tr>
+													<td width=5> </td>
+													<td width=398>[content]<br /><span style="color: #b0b0b0">[date] و در ساعت [time] و با آدرس [ip]</span></td>
+													<td width=4> </td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<br />
+						</comment>
+<new comment>
+<table style="border-collapse: collapse" bordercolor=#111111 cellspacing=0 cellpadding=0 width="100%" background="images/themes/silver/post up center.gif" border=0>
+	<tbody>
+		<tr>
+			<td width="33%"><img src="images/themes/silver/menu up right.gif" width=20 height=23 /></td>
+			<td width="33%"><p align="center"><b>ارسال نظر</b></td>
+			<td width="34%"><p style="text-align: left" align=left><img src="images/themes/silver/post up left.gif" width=25 height=23 /></p></td>
+		</tr>
+	</tbody>
+</table>
+<div class="term">
+توجه:<br />
+» لطفا کوتاه و در مورد مطلب بنويسيد.<br />
+» لطفا فينگليش ننويسيد. (فارسي يا انگليسي بنويسيد )<br />
+» سوالات يا نظراتي را که ربطي به مطلب ندارند در پيام خصوصي براي من بفرستيد.
+</div>
+<p>
+<table dir=rtl height=245 cellspacing=0 cellpadding=0 width=412 border=0>
+	<tbody>
+		<tr>
+			<td width=150 height=20>نام:</td>
+			<td valign=center width=141 height=19>[author value=(23)]<span style="color: #aec4d8">*</span></td>
+			<td valign=center width=121 height=59 rowspan="3">[save cookie value=(مرا به خاطر بسپار)]<br />[private message value=(خصوصي)]</td>
+		</tr>
+		<tr>
+			<td width=150 height=20>پست الکترونيکي:</td>
+			<td valign=center width=141 height=20>[email value=(23)]<span style="color: #aec4d8">*</span></td>
+		</tr>
+		<tr>
+			<td width=150 height=20>سايت:</td>
+			<td valign=center width=141 height=20>[url value=(23)]</td>
+		</tr>
+		<tr>
+			<td width=150 height=20>کد امنيتي:</td>
+			<td width=141 height=20>[security code field]<span style="color: #aec4d8">*</span> [security code]</td>
+		</tr>
+		<tr>
+			<td valign=top width=150 height=152 style="margin-top: 10px">[emoticons value=(<br /><a href="#" onClick="window.open('?action=emoticon', '_blank', 'width=300, height=300, status=yes, scrollbars=yes, resizable=yes');">بيشتر</a>)]</td>
+			<td valign=center width=256 colspan=2 height=152>[content value=(23)]</td>
+		</tr>
+		<tr>
+			<td valign=top height=34 colspan=3 align=center>
+				<div style="color: #0066cc">[result]</div><br />
+				[submit value=(ارسال)] [reset value=(مجدد)]
+			</td>
+		</tr>
+	</tbody>
+</table>
+</new comment>
+</div>
+</body>
+</html>]]></item>
+		<item name="post"><![CDATA[<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>.:|[site title separator]|:.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=[site charset]">
+<meta http-equiv="Content-Script-Type" content="text/JavaScript">
+<meta http-equiv="Content-Language" content="Fa">
+<meta http-equiv="designer" content="Mahdi Nezarati Zadeh">
+<meta name="description" content="[site description]">
+<meta name="keywords" content="[site keywords]">
+<meta name="generator" content="[site generator]">
+<meta name="author" content="[site author]">
+<meta name="copyright" content="Allright Reserved by [site name] 2007">
+<meta name="distrubution" content="global">
+<meta name="geo.country" content="ir">
+<meta name="robots" content="index,follow,all,noarchive">
+<link rel="alternate" type="application/rss+xml" title="[site title]" href="[rss]" />
+<link rel="alternate" type="application/rss+xml" title="[site title]'s Comment" href="[comments rss]" />
+<link rel="alternate" type="application/rss+xml" title="[site title]'s Blogroll" href="[link rss]" />
+<link rel="alternate" type="application/rdf+xml" title="[site title]" href="[rdf]" />
+<link rel="alternate" type="application/atom+xml" title="[site title]" href="[atom]" />
+<link rel="alternate" type="application/opml+xml" title="[site title]" href="[opml]" />
+<link rel="alternate" type="application/opml+xml" title="[site title]'s Blogroll" href="[link opml]" />
+<link rel="archives" title="[site title]'s Members" href="[member list]" />
+<link rel="stylesheet" href="[style]" type="text/css" />
+<script src="[script]" type="text/javascript"></script>
+<script src="[main script]" type="text/javascript"></script>
+</head>
+<body bgColor="#bfd1dd" background="images/themes/silver/back ground.gif">
+<table border="0" cellpadding="0" cellspacing="0" width="920" height="543" align="center">
+	<tr>
+		<td valign="top" colspan="3" height="85">
+<table cellpadding="0" cellspacing="0" width="901" height="100">
+	<tr>
+		<td width="901" valign="top" align="center">
+			<embed src="menu.swf" name="menu" menu="false" quality="high" bgcolor="#FFFFFF" width="780" height="117" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" wmode="transparent"><p>
+		</td>
+	</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" width="175" class="sidebar">
+<h1>لوگو</h1><ul>
+<img src="[logo]" title="[site description]"><br />
+<input class="input" id="logo" value='<script src="[logo url]"></script>'><img src="images/themes/silver/copy.gif" class="btn" title="کپي کد" onClick="copy('logo');"><br />
+لطفا براي حمايت از ما آدرس لوگوي سايت را در سايت خود قرار دهيد.
+</ul><h2></h2>
+<advertisment block><h1>تبليغات</h1><ul>
+<advertisment>
+<table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%" style="border: #cfdce8 1px solid" dir="rtl" bgcolor="#f6f8f9">
+	<tbody>
+		<tr>
+			<td style="font-size: 11px; color: #595959; line-height: 150%; font-family: tahoma">
+			<table border="0" cellspacing="2" cellpadding="2" width="100%" height="100%" dir="rtl">
+				<tbody>
+					<tr>
+						<td height="21" style="font-size: 11px; color: #595959; line-height: 150%; font-family: tahoma"><span style="cursor: hand; color: #1f6b94; line-height: 130%"><a href="[url]" target="_blank"><span style="color: #1f6b94">[name]</span></a></span></td>
+					</tr>
+					<tr>
+						<td valign="top" style="font-size: 11px; color: #595959; line-height: 150%; font-family: tahoma">
+						<div align="justify" style="line-height: 130%">
+						<a title="مشاهده: [view]، کليک: [count]" href="[url]" target="_blank"><span style="color: #595959">[description]</span></a>
+						</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td height="13" valign="top" style="font-size: 11px; color: #595959; line-height: 150%; font-family: tahoma" bgcolor="#cfdce8">
+			<div align="left" title="تبليغات شما در [site title]" onClick="document.location='[contact]'" style="font-size: 10px; cursor: hand; color: #1f6b94; line-height: 120%">
+			&nbsp;Ads by [site name]
+			</div>
+			</td>
+		</tr>
+	</tbody>
+</table><br />
+</advertisment>
+</ul><h2></h2></advertisment block>
+<h1>پيوندها</h1><ul>
+<link block><marquee id="linkbox" height="80" width="162" direction="up" scrollamount="1" scrolldelay="20" onmouseover="stop();" onmouseout="start();" style="text-align: center">
+<link><a href="[url]" title="[description]" onmouseover="window.status='ارسال شده در [date] و ساعت [time]';return true" title="[description]" onmouseout="self.status=''" href="[url]" target=_blank>[name] ([view]/[count])</a><br /></link></marquee>
+<span style="cursor: hand; font-weight: bold">
+<span onmouseover="linkbox.scrollDelay=10;linkbox.direction='Down';linkbox.start()" onmouseout="linkbox.scrollDelay=20">?</span>
+<span onmouseover="linkbox.stop()">??</span>
+<span onmouseover="linkbox.scrollDelay=10;linkbox.direction='up';linkbox.start()" onmouseout="linkbox.scrollDelay=20">?</span>
+</span><br /></link block><input class="input" id="linkcode" value='<script src="[linkbox]" language="javascript" type="text/javascript"></script>'><img src="images/themes/silver/copy.gif" class="btn" title="کپي کد" onClick="copy('linkcode');" /><br />
+<br />اگر مايل به تبادل لينک هستين منو با عنوان "[site title]" لينک کنيد و بعد روي <a href="javascript:void(0)" onClick="javascript:window.open('[link registration]','newLink','status=yes, scrollbars=yes, width=300, height=290')">اينجا</a> کليک کنيد و لينک خودتونو اضافه کنيد.
+</ul><h2></h2>
+<h1>جستجو</h1><ul>
+<search>[search value=(20)]<br />[submit value=(جستجو)]</search>
+</ul><h2></h2>
+<h1>خبرنامه</h1><ul>
+<newsletter><table cellSpacing="0" border="0" width="90%" align="center">
+	<tr>
+		<td>ايميل</td>
+		<td>[email value=(20)]</td>
+	</tr>
+	<tr>
+		<td colspan="2">[subscription value=(عضويت)] [unsubscription value=(لغو عضويت)]</td>
+	</tr>
+	<tr align="center">
+		<td colspan="2">[submit value=(انجام عمليات)]</td>
+	</tr>
+	<tr align="center">
+		<td colspan="2">[result]</td>
+	</tr>
+</table></newsletter>
+</ul><h2></h2>
+<poll><h1>نظر سنجي</h1><ul>
+<main>[question]<br />
+<answer><input type="radio" value="[id]" name="answer" class="radiobutton">[answer]<br /></answer>
+[submit value=(ثبت راي)]<br /><br /><a title="نمايش نتيجه ي نظر سنجي" target="_self" href="[url]" >کل آرا: [total votes]</a><br />[result]</main>
+<result>نتيحه ي راي گيري<br />[question]<br /><br />
+<table width=100%>
+<reply><tr>
+	[answer]<small>([score]%)</small><br /><img src="images/themes/silver/poll/start.gif" height="10" width="2" /><img src="images/themes/silver/poll/bar.gif" height="10" width="[score]" title="[answer] -> [score]% ([vote] راي از [total votes])" /><img src="images/themes/silver/poll/end.gif" height="10" width="2" />
+</tr></reply>
+<br /><br />نتيجه‌ي نظر سنجي از [total votes] راي</a></table></result>
+</ul><h2></h2></poll>
+<h1>پوسته‌ها</h1><ul>
+<theme><main><a href="[url]" title="[description]">[name] ([version])</a><br /></main><select><li><a href="[url]" title="[description]">[name] ([version])</a></li><br /></select></theme>
+</ul><h2></h2>
+<h1>جزئيات</h1><ul>
+امروز: [site date]<br />
+تاريخ ايجاد: [create site date]<br />
+<counter>
+بازديد امروز: [today]<br />
+بازديد ديروز: [yesterday]<br />
+افراد آنلاين: <span title="<max online>بيشترين افراد آنلاين: [count]
+در تاريخ [date] و ساعت [time]</max online>">[online]</span><br />
+کل بازديد ها: <span title="<max visit>بيشترين بازديد: [count]
+در تاريخ [date] و ساعت [time]</max visit>">[total]</span><br /></counter><total>
+کل مطالب: [post]<br />
+کل نظرات: [comment]<br />
+کل يادبودها: [memory]<br />
+کل لينک ها: [link]<br />
+کل تبليغ ها: [advertisment]<br />
+کل عضو ها: [user]<br />
+کل نظر سنجي ها: [poll]<br /></total>
+ايجاد صفحه: [page generation] ثانيه
+</ul><h2></h2>
+</td>
+		<td valign="top" width="570" align="center" dir="rtl">
+<announcement><div id="window" style="width: 99%"><div id="upcenter"><div id="upleft"><div id="upright"><div id="title" style="text-align: right">اعلان: [title]</div></div></div></div><div id="body" style="text-align: right">
+<img border="0" src="images/themes/silver/announcement.gif" title="اعلان" />[content]
+</div><div id="downcenter"><div id="downleft"><div id="downright"></div></div></div></div><br /></announcement>
+<link dump block><div id="window" style="width: 99%"><div id="upcenter"><div id="upleft"><div id="upright"><div id="title" style="text-align: right">پيوندهاي روزانه</div></div></div></div><div id="body" style="text-align: right">
+<link dump><a href="[url]" title="[description]">[name] ([view]/[count])</a><br /></link dump>
+</div><div id="downcenter"><div id="downleft"><div id="downright"></div></div></div></div><br /></link dump block>
+<post>
+<div id="post[id]">
+<table border="0" cellpadding="0" style="border-collapse: collapse; font-family: Tahoma; font-size: 8pt" width="99%">
+	<tr>
+	<td width="4%" height="23" style="background-image: url('images/themes/silver/post up right.gif'); background-repeat: no-repeat right"></td>
+	<td height="23" style="background-image: url('images/themes/silver/post up center.gif'); background-repeat: repeat-x"><div id="post-title-[id]">[title]</div></td>
+		<td height="23" style="background-image: url('images/themes/silver/post up center.gif'); background-repeat: repeat-x"><div align="left">[date]</div></td>
+		<td width="4%" height="23" style="background-image: url('images/themes/silver/post up left.gif'); background-repeat: no-repeat left"></td>
+	</tr>
+	<tr>
+		<td colspan="4" style="border-left: 1px solid #C8C6C6; border-right:1px solid #C8C6C6; border-top:1px solid #C8C6C6; padding:5px; color: #000000; background-color: #FFFFFF; font-family: Tahoma; font-size:9pt" valign="top"><div id="post-content-[id]" class="post">[content]<more><br /><a href="javascript:void(0)" onclick="request('do=postMoreContent&id=[id]', 'post-content-[id]')"><img border="0" src="images/themes/silver/more.gif">ادامه ي مطلب</a></more></div></td>
+	</tr>
+	<tr>
+		<td colspan="4" style="border-left: 1px solid #C8C6C6; border-right:1px solid #C8C6C6; border-bottom:1px solid #C8C6C6; padding:2px; color: #666666; background-color: #FFFFFF; font-family: Tahoma; font-size:7pt" valign="top">
+		<author>[<img border="0" src="images/themes/silver/author.gif" />نوشته شده توسط <a href="mailto:[email]" title="[url]">[name]</a>]</author>
+		[<img border="0" src="images/themes/silver/time.gif" />ساعت [time]] 
+		<category>[<img border="0" src="images/themes/silver/category.gif" />موضوع: <a href="[url]" title="[description]">[name]</a>]</category>
+		[<img border="0" src="images/themes/silver/view.gif" />مشاهده: [view]]<br />
+		[<a href="javascript:void(0)" onClick="javascript:postMail('post-title-[id]', 'post-content-[id]');"><img src="images/themes/silver/post mail.jpg" title="پست ميل" /></a> <a href="[download]" title="ذخيره کردن اين مطلب"><img src="images/themes/silver/save.gif" /></a> <a href="[url]" title="لينک اين مطلب"><img src="images/themes/silver/link.gif" /></a> <a href="[rss]" title="RSS"><img src="images/themes/silver/feed.gif" /></a> <a href="[rdf]" title="RDF"><img src="images/themes/silver/feed.gif" /></a> <a href="[atom]" title="ATOM"><img src="images/themes/silver/feed.gif" /></a> <a href="[opml]" title="OPML"><img src="images/themes/silver/feed.gif" /></a>]
+		<last edit>[<img border="0" src="images/themes/silver/last edit.jpg" />آخرين ويرايش [date] ودر ساعت [time]]</last edit>
+		<modify>[<img border="0" src="images/themes/silver/modify.gif" title="ويرايش" onclick="return sendXMLHttpRequest('[url]', 'GET', 'post[id]')" /> <img border="0" src="images/themes/silver/delete.gif" title="حذف" onclick="return ADI('do=delete_post&id=[id]', 'post[id]' ,'آيا مطمئن از حذف مطلب [title] هستيد؟')" />]</modify>
+		<rate><script>rate.ratings([id], [votes]);</script></rate>
+	</tr>
+</table>
+<table border="0" cellpadding="0" style="border-collapse: collapse" width="99%">
+	<tr height="22">
+		<td width="8" style="background-image: url('images/themes/silver/post down right.gif'); background-repeat: no-repeat right"></td>
+		<td colspan="2" height="22" style="background-image: url('images/themes/silver/post down center.gif'); background-repeat: repeat-x"></td>
+		<td width="8" style="background-image: url('images/themes/silver/post down left.gif'); background-repeat: no-repeat left"></td>
+	</tr>
+</table>
+<br />
+</div>
+</post>
+<div id="comment">
+<comment>
+<div id=upcenter>
+<div id=upleft>
+<div id=upright>
+<div id=title><table border=0 cellspacing=0 cellpadding=0 width=95%><tr><td align=right width=70%>نوسنده: [author]</td><td align=left width=30%><url><a href="[url]" target="_blank"><img title="آدرس اينترنتي اين کاربر" src="images/themes/silver/site.gif" border=0 /> </url></a><email><a href="mailto:[email]"><img title="ارسال ايميل به اين کاربر" src="images/themes/silver/email.gif" border=0 /></a></email></td></tr></table></div></div></div></div>
+<div id=body>
+[content]
+</div>
+<div id=downcenter>
+<div id=downleft>
+<div id=downright>
+<div id=title style="color: #666666">
+[date] در ساعت [time] و با آدرس [ip]
+</div></div></div></div><br />
+</comment>
+<new comment>
+<div style="height: 23px; width: 99%; background: url('images/themes/silver/post up center.gif') repeat-x">
+<div style="height: 23px; background: url('images/themes/silver/post up left.gif') no-repeat left">
+<div style="height: 23px; background: url('images/themes/silver/post up right.gif') no-repeat right">
+<div id=title style="text-align: center">ارسال نظر</div></div></div></div>
+<div id=body>
+<div class="term">
+توجه:<br />
+» لطفا کوتاه و در مورد مطلب بنويسيد.<br />
+» لطفا فينگليش ننويسيد. (فارسي يا انگليسي بنويسيد )<br />
+» سوالات يا نظراتي را که ربطي به مطلب ندارند در پيام خصوصي براي من بفرستيد.
+</div>
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>نام:</td>
+		<td width=0 height=19> [author value=(35)] <span style="color: #aec4d8">*</span></td>
+		<td vAlign=center width=141 rowspan="3">[save cookie value=(مرا به خاطر بسپار)]<br />[private message value=(نظر خصوصي)]</td>
+	</tr>
+	<tr>
+		<td>پست الکترونيک:</td>
+		<td>[email value=(35)]<span style="color: #aec4d8">*</span></td>
+	</tr>
+	<tr>
+		<td>سايت:</td>
+		<td>[url value=(35)]</td>
+	</tr>
+	<tr>
+		<td>کد امنيتي:</td>
+		<td>[security code field]<span style="color: #aec4d8">*</span> [security code]</td>
+		<td rowspan="3"><div style="width:150px" valign="top">[emoticons]</div></td>
+	</tr>
+	<tr>
+		<td>پيام:</td>
+		<td>[content value=(35)]<span style="color: #aec4d8">*</span></td>
+	</tr>
+	<tr>
+		<td colspan=2 align=center>[submit value=(افزودن)] [reset value=(مجدد)]</td>
+	</tr>
+</table>
+<div style="color: #0066cc; text-align: center">[result]</div>
+</div>
+<div style="height: 19; width: 99%; background: url('images/themes/silver/menu down center.gif') repeat-x">
+<div style="height: 19px; background: url('images/themes/silver/menu down left.gif') no-repeat left">
+<div style="height: 19px; background: url('images/themes/silver/menu down right.gif') no-repeat right">
+<div id=title></div></div></div></div>
+</new comment>
+</div>
+</td>
+		<td valign="top" height="419" width="175" class="sidebar">
+<h1>[site title]</h1><ul>
+<table cellSpacing="0" border="0" width="90%" align="center">
+	<tr align="center">
+		<td><a onClick="this.style.behavior='url(#default#homepage)';this.setHomePage('[site url]');" href="javascript:void(0)"><img src="images/themes/silver/home page.jpeg" title="اين سايت را صفحه ي خانگي کنيد!" /></a></td>
+		<td><a href="javascript:window.external.AddFavorite('http://[site url]',' [site title] ')"><img src="images/themes/silver/add favorites.jpeg" title="اين سايت را به صفحات مورد علاقه تان اضافه کنيد!" /></a></td>
+		<td><a href="mailto:[site email]"><img src="images/themes/silver/mail.gif" title="پست الکترونيک!" /></a></td>
+		<td><a href="[site url]"><img border="0" src="images/themes/silver/home.gif" title="صفحه نخست!" /></a></td>
+	</tr>
+	<tr align="center">
+		<td><a onClick="window.open('[contact]','_blank','width=400, height=425, status=yes, scrollbars=yes, resizable=yes');" href="javascript:void(0)"><img src="images/themes/silver/contact.jpeg" title="تماس با ما!" /></a></td>
+		<td><a onClick="window.open('[guestbook]','_blank','width=457, height=500, status=yes, scrollbars=yes, resizable=yes');" href="javascript:void(0)"><img src="images/themes/silver/guestbook.gif" title="دفتر يادبود!" /></a></td>
+		<td><a href="[membership]"><img src="images/themes/silver/membership.gif" title="عضويت در سايت!" /></a></td>
+		<td><img src="images/themes/silver/forum.gif" class="disabled" title="انجمن گفتگو!"></td>
+	</tr>
+	<tr align="center">
+		<td><a href="[rss]"><img src="images/themes/silver/feed/rss.gif" /></a></td>
+		<td><a href="[rdf]"><img src="images/themes/silver/feed/rdf.gif" /></a></td>
+		<td><a href="[atom]"><img src="images/themes/silver/feed/atom.gif" /></a></td>
+		<td><a href="[opml]"><img src="images/themes/silver/feed/opml.gif" /></a></td>
+	</tr>
+</table>
+</ul><h2></h2>
+<h1>آرشيو موضوعي</h1><ul style="text-align:right">
+[site category]
+</ul><h2></h2>
+<h1>تقويم</h1><ul>
+[site calendar]
+</ul><h2></h2>
+<last post block><h1>نوشته‌هاي پيشين</h1><ul>
+<last post><a href="[url]" title="مشاهده: [view]، نظر: [comment]">[title]</a><br /></last post>
+</ul><h2></h2></last post block>
+<h1>مؤلف‏ها</h1><ul id=user>
+<author><a href="[profile]"<status> class=<online>online</online><offline>offline</offline></status> title="نمايش مشخصات [username]"></a><a href="[post url]" title="[email]">[name]([count post])</a><br /></author>
+</ul><h2></h2><log in>
+<h1>ورود</h1><ul style="text-align:right">
+<table cellSpacing="0" width="100%">
+	<tr>
+		<td>نام کاربري</td>
+		<td>[username value=(12)]</td>
+	</tr>
+	<tr>
+		<td>کلمه ي عبور</td>
+		<td>[password value=(12)]</td>
+	</tr>
+	<tr>
+		<td>کد امنيتي</td>
+		<td>[security code field] [security code]</td>
+	</tr>
+	<tr align="center">
+		<td colspan="2">[remember value=(مرا به خاطر بسپار)]</td>
+	</tr>
+	<tr align="center">
+		<td>[submit value=(ورود)]</td>
+		<td><input type="button" onClick="document.location='[membership]'" value="عضويت" class="button" /></td>
+	</tr>
+	<tr align="center">
+		<td colspan="2">[result]</td>
+	</tr>
+</table>
+</ul><h2></h2></log in><loged in>
+<h1>وضعيت شما</h1><ul style="text-align:right">
+<avatar><center><img border="0" src="[url]"></center></avatar>
+[username] خوش آمديد.<br /><state>
+<comment>نظرات تاييد نشده: [inactive]<br />
+نظرات خصوصي جديد: [private]<br /></comment>
+<guestbook>يادبودهاي تاييد نشده: [inactive]<br />
+يادبودهاي خصوصي جديد: [private]<br /></guestbook>
+<message>پيام‌هاي جديد: [new]<br /></message>
+<link>لينک‌هاي تاييد نشده: [inactive]<br /></link>
+</state><a href="[control panel]">ورود به کنترل پنل</a><br />
+<a href="[log out]">خروج</a>
+</ul><h2></h2></loged in>
+</td>
+	</tr>
+	<tr>
+		<td valign="top" colspan="3" height="50" id="footer">
+			<div id="left">
+				<div id="center">
+					<div id="right">
+						<div id="body">
+							رفتن به صفحه (<page><main><a href="[url]"> [page] </a></main><select><a href="[url]"> <b>[page]</b> </a></select></page>)
+						</div>
+					</div>
+				</div>
+			</div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>]]></item>
+		<item name="contact"><![CDATA[<html>
+<head>
+<title>برقراري ارتباط</title>
+<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+<link rel="stylesheet" href="[style]" type="text/css" />
+<script src="[script]"></script>
+<script src="[main script]"></script>
+</head>
+<body topmargin="0" leftmargin="0" bgColor="#bfd1dd"; background="images/themes/silver/back ground.gif">
+<contact><center>
+<div id="window" style="width:100%">
+<div id="upcenter"><div id="upleft"><div id="upright"><div id="title">ارتباط با ما</div></div></div></div>
+<div id="body">
+	<table border="0" width="100%" cellspacing="0" cellpadding="3">
+		<tr>
+			<td width="33%">نام:</td>
+			<td width="33%">[author value=(30)]</td>
+			<td rowspan="2" width="33%">[save cookie value=(مرا به خاطر بسپار)]</td>
+		</tr>
+		<tr>
+			<td>پست الکترونيک:</td>
+			<td>[email value=(30)]</td>
+		</tr>
+		<tr>
+			<td>سايت:</td>
+			<td>[url value=(30)]<br />
+		</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>کد امنيتي:</td>
+			<td>[security code field]</td>
+			<td>[security code]</td>
+		</tr>
+		<tr>
+			<td>به:</td>
+			<td><select class="select" name="to"><user><option value=[id] [selected]>[name] ([username])</option></user></select></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>عنوان:</td>
+			<td>[subject value=(30)]</td>
+			<td rowspan="2"><div style="width:100%" valign="top">[emoticons value=(<br /><a href="#" onClick="window.open('?action=emoticon', '_blank', 'width=300, height=300, status=yes, scrollbars=yes, resizable=yes');">بيشتر</a>)]</div></td>
+		</tr>
+		<tr>
+			<td>پيام:</td>
+			<td>[content value=(30)]</td>
+		</tr>
+		<tr>
+			<td colspan="3" align="center">
+				<span style="color: #0066cc">[result]</span>
+				<br />[submit value=(ارسال)] [reset value=(مجدد)]
+			</td>
+		</tr>
+	</table>
+</div>
+<div id="downcenter"><div id="downleft"><div id="downright"></div></div></div>
+</div>
+</center></contact>
+</body>
+</html>]]></item>
+		<item name="guestbook"><![CDATA[<html>
+<head>
+<title>دفتر يادبود</title>
+<meta http-equiv="content-type" content="text/html; charset=[site charset]" />
+<link rel="stylesheet" href="[style]" type="text/css" />
+<script src="[script]"></script>
+<script src="[main script]"></script>
+</head>
+<body leftmargin=5 topmargin=5>
+<div align=center>
+<table style="border-collapse: collapse" bordercolor=#b0c2d9 height=489 cellpadding=0 width=430 border=1>
+	<tbody>
+		<tr>
+			<td bordercolor=#b0c2d9 background="images/themes/silver/comment bg.gif" height=95>
+				<div style="font-size: 8pt; text-align: center; font-weight: bold; color: #ffffff; margin:15 0 0 0">[site name] Guestbook System</div>
+				<div style="margin: 30 0 0 0; background-image: url('images/themes/silver/header.gif'); background-repeat: repeat-x; width: 100%; height: 42"></div>
+			</td>
+		</tr>
+		<tr>
+	<td dir=rtl bordercolor=#819bcf height=392>
+		<table cellspacing=0 cellpadding=0 width="99%" border=0>
+			<tbody>
+				<tr>
+					<td width=8> </td>
+					<td>
+						<memory>
+						<table dir=rtl style="border-collapse: collapse" bordercolor=#b0c2d9 cellspacing=0 cellpadding=0 width="100%" border=1>
+							<tbody>
+								<tr>
+									<td background="images/themes/silver/menu up center.gif">
+										<table dir=rtl cellspacing=0 cellpadding=0 width=410 border=0>
+											<tbody>
+												<tr>
+													<td width=10> </td>
+													<td width=192><p dir=ltr align="right">نويسنده: [author]</p></td>
+													<td width=203><p dir=ltr style="direction: ltr; text-align: left">
+														<url><a href="[url]" target="_blank"><img src="images/themes/silver/site.gif" border="0" title="آدرس اينترنتي اين کاربر" /></a></url> <email><a href="mailto:[email]"><img src="images/themes/silver/email.gif" border="0" title="ارسال ايميل به اين کاربر" /></a></email></p>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<table dir=rtl cellspacing=0 cellpadding=0 width=410 border=0>
+											<tbody>
+												<tr>
+													<td width=5> </td>
+													<td width=398>[content]<br /><span style="color: #b0b0b0">[date] و در ساعت [time] و با آدرس [ip]</span></td>
+													<td width=4> </td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<br />
+						</memory>
+<new memory>
+<table style="border-collapse: collapse" bordercolor=#111111 cellspacing=0 cellpadding=0 width="100%" background="images/themes/silver/post up center.gif" border=0>
+	<tbody>
+		<tr>
+			<td width="33%"><img src="images/themes/silver/menu up right.gif" width=20 height=23 /></td>
+			<td width="33%"><p align="center"><b>ارسال يادبود</b></td>
+			<td width="34%"><p style="text-align: left" align=left><img src="images/themes/silver/post up left.gif" width=25 height=23 /></p></td>
+		</tr>
+	</tbody>
+</table>
+<div class="term">
+توجه:<br />
+» لطفا کوتاه و در مورد مطلب بنويسيد.<br />
+» لطفا فينگليش ننويسيد. (فارسي يا انگليسي بنويسيد )<br />
+» سوالات يا نظراتي را که ربطي به مطلب ندارند در پيام خصوصي براي من بفرستيد.
+</div>
+<p>
+<table dir=rtl height=245 cellspacing=0 cellpadding=0 width=412 border=0>
+	<tbody>
+		<tr>
+			<td width=150 height=20>نام:</td>
+			<td valign=center width=141 height=19>[author value=(23)]<span style="color: #aec4d8">*</span></td>
+			<td valign=center width=121 height=59 rowspan="3">[save cookie value=(مرا به خاطر بسپار)]<br />[private message value=(خصوصي)]</td>
+		</tr>
+		<tr>
+			<td width=150 height=20>پست الکترونيکي:</td>
+			<td valign=center width=141 height=20>[email value=(23)]<span style="color: #aec4d8">*</span></td>
+		</tr>
+		<tr>
+			<td width=150 height=20>سايت:</td>
+			<td valign=center width=141 height=20>[url value=(23)]</td>
+		</tr>
+		<tr>
+			<td width=150 height=20>کد امنيتي:</td>
+			<td width=141 height=20>[security code field]<span style="color: #aec4d8">*</span> [security code]</td>
+		</tr>
+		<tr>
+			<td valign=top width=150 height=152 style="margin-top: 10px">[emoticons value=(<br /><a href="#" onClick="window.open('?action=emoticon', '_blank', 'width=300, height=300, status=yes, scrollbars=yes, resizable=yes');">بيشتر</a>)]</td>
+			<td valign=center width=256 colspan=2 height=152>[content value=(23)]</td>
+		</tr>
+		<tr>
+			<td valign=top height=34 colspan=3 align=center>
+				<div style="color: #0066cc">[result]</div><br />
+				[submit value=(ارسال)] [reset value=(مجدد)]
+			</td>
+		</tr>
+	</tbody>
+</table>
+</new memory>
+</div>
+</body>
+</html>]]></item>
+		<item name="link registration"><![CDATA[<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+<title>تبادل لينک</title>
+<link rel="stylesheet" href="[style]" type="text/css" />
+<script src="[main script]"></script>
+</head>
+<body topmargin="0" leftmargin="0" bgColor="#bfd1dd" background="images/themes/silver/back ground.gif">
+<center>
+<div id="window" style="width:100%">
+<div id="upcenter"><div id="upleft"><div id="upright"><div id="title">تبادل لينک</div></div></div></div>
+<div id="body"><new link>
+<table border="0" cellspacing="1" dir="rtl" height="131" style="width: 100%">
+	<tr>
+		<td width="34%" height="21">
+			<p align="left"><span style="color: #32434E">عنوان:</span>
+		</td>
+		<td width="66%" height="21">
+			[name value=(30)]<span style="color:#0066cc">*</span>
+		</td>
+	</tr>
+	<tr>
+		<td width="34%" height="21">
+			<p align="left"><span style="color: #32434E">آدرس:</span>
+		</td>
+		<td width="66%" height="21">
+			[url value=(30)]<span style="color:#0066cc">*</span>
+		</td>
+	</tr>
+	<tr>
+			<td width="34%" height="19">
+				<p align="left"><span style="color: #32434E">شرح:</span>
+			</td>
+			<td width="66%" height="19">
+				[description value=(30)]
+			</td>
+	</tr>
+	<tr>
+		<td width="34%" height="19">
+			<p align="left"><span style="color: #32434E">پست الکترونيک:</span>
+		</td>
+		<td width="66%" height="19">
+			[email value=(30)]<span style="color:#0066cc">*</span>
+		</td>
+	</tr>
+	<tr>
+		<td width="34%" height="19">
+			<p align="left"><span style="color: #32434E">کد امنيتي:</span>
+		</td>
+		<td width="66%" height="19">
+			[security code field]<span style="color:#0066cc">*</span> [security code]
+		</td>
+	</tr>
+	<tr>
+		<td width="34%" height="19">
+		<p align="left"><span style="color: #32434E">نوع:</span></td>
+		<td width="66%" height="19">
+			[link value=(پيوند)] [dump value=(پيوند روزانه)] [advertisment value=(تبليغ)]
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 align=center>
+			[submit value=(افزودن)]
+		</td>
+	</tr>
+	<tr>
+		<td width="66%" height="23" colspan="2" style="color: #0066cc; font-family: tahoma; font-size: 8pt; text-align: center">
+			[result]
+		</td>
+	</tr>
+</table>
+</new link>
+</div><div id="downcenter"><div id="downleft"><div id="downright"></div></div></div>
+</center>
+</body>
+</html>]]></item>
+		<item name="profile"><![CDATA[<profile><html>
+<head>
+<title>مشخصات فردي [name]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+<link rel="stylesheet" href="[style]" type="text/css" />
+<script src="[script]"></script>
+<script src="[main script]"></script>
+</head>
+<body bgColor="#bfd1dd"; background="images/themes/silver/back ground.gif">
+<div id="window"><div id="upcenter"><div id="upleft"><div id="upright"><div id="title">مشخصات فردي [name]</div></div></div></div><div id="body" style="align: center">
+	<table border="0" width="100%" cellspacing="0" cellpadding="0" style="padding: 5px">
+	<tr>
+				<td>نام کاربري</td>
+				<td>[username]</td>
+				<td rowspan="19" style="border-right: #e7e7e7 1px solid;" bgcolor="#f8f9fa" valign="top">
+					<avatar>تصوير<ul><img border="0" src="[avatar]"></ul></avatar>
+					<im>پيام رسان‌ها<ul><msn><img border="0" src="images/themes/silver/im/msn.gif" title="MSN ID" />[msn]<br /></msn><yahoo><img border="0" src="images/themes/silver/im/yahoo.gif" title="Yahoo ID" />[yahoo]<br /></yahoo><gmail><img border="0" src="images/themes/silver/im/gmail.png" title="Gmail ID" />[gmail]<br /></gmail><aim><img border="0" src="images/themes/silver/im/aim.gif" title="AIM ID" />[aim]<br /></aim><icq><img border="0" src="images/themes/silver/im/icq.gif" title="ICQ ID" />[icq]<br /></icq></ul></im>
+					<contact>برقراري ارتباط<ul><message><img src="images/themes/silver/pm.gif" class="btn" onClick="window.open('[pm]', '_blank', 'width=400, height=425, status=yes, scrollbars=yes, resizable=yes')" title="فرستادن پيام خصوصي" /><br /></message><email><img src="images/themes/silver/email.gif" class="btn" onClick="window.location='mailto:[email]'" title="ارسال ايميل به اين کاربر" /><br /></email><url><img src="images/themes/silver/site.gif" class="btn" onClick="window.open('[url]', '_blank')" title="آدرس اينترنتي اين کاربر" /></url></ul></contact>
+					<signature>امضا<ul>[signature]</ul></signature>
+				</td>
+			</tr>
+			<tr>
+				<td>نام</td>
+				<td>[first name]</td>
+			</tr>
+			<tr>
+				<td>نام خانوادگي</td>
+				<td>[last name]</td>
+			</tr>
+			<tr>
+				<td>لقب</td>
+				<td>[nickname]</td>
+			</tr>
+			<birthday><tr>
+				<td>تاريخ تولد</td>
+				<td>[date] در ساعت [time]</td>
+			</tr></birthday>
+			<age><tr>
+				<td>سن</td>
+				<td>[age]</td>
+			</tr></age>
+			<gender><tr>
+				<td>جنسيت</td>
+				<td>[gender]</td>
+			</tr></gender>
+			<marriage><tr>
+				<td>تاهل</td>
+				<td>[marriage]</td>
+			</tr></marriage>
+			<tr>
+				<td>تحصيلات</td>
+				<td>[eduction]</td>
+			</tr>
+			<tr>
+				<td>شغل</td>
+				<td>[vocation]</td>
+			</tr>
+			<tr>
+				<td>سرگرمي‌ها</td>
+				<td>[amusement]</td>
+			</tr>
+			<tr>
+				<td>علاقه مندي‌ها</td>
+				<td>[favorite]</td>
+			</tr>
+			<tr>
+				<td>درباره</td>
+				<td>[about]</td>
+			</tr>
+			<tr>
+				<td>آدرس</td>
+				<td>[location]</td>
+			</tr>
+			<tr>
+				<td>تلفن</td>
+				<td>[phone]</td>
+			</tr>
+			<tr>
+				<td>تاريخ عضويت</td>
+				<td><registered>[date] در ساعت [time]</registered></td>
+			</tr>
+			<last login><tr>
+				<td>آخرين بازديد</td>
+				<td>[date] در ساعت [time]</td>
+			</tr></last login>
+			<time online><tr>
+				<td>مدت زمان آنلاين بودن</td>
+				<td><year>[year] سال و </year><month>[month] ماه و </month><week>[week] هفته و </week><day>[day] روز و </day><hour>[hour] ساعت و </hour><minute>[minute] دقيقه و </minute><second>[second] ثانيه </second></td>
+			</tr></time online>
+			<tr>
+				<td>سطح</td>
+				<td>[level]</td>
+			</tr>
+			<post><tr>
+				<td>تعداد نوشته‌ها</td>
+				<td>[count]</td>
+			</tr></post>
+	</table>
+</div><div id="downcenter"><div id="downleft"><div id="downright"></div></div></div></div>
+</body>
+</html></profile>
+<member list><html>
+<head>
+<title>ليست کاربران</title>
+<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+<link rel="stylesheet" href="[style]" type="text/css" />
+<script src="[script]"></script>
+<script src="[main script]"></script>
+</head>
+<body bgColor="#bfd1dd"; background="images/themes/silver/back ground.gif">
+<div id="window"><div id="upcenter"><div id="upleft"><div id="upright"><div id="title">ليست کاربران</div></div></div></div><div id="body" style="align: center">
+	<table width="100%" cellspacing="0" cellpadding="0" style="padding:5px;">
+		<tr>
+			<td>نام کاربري</td>
+			<td>نام مستعار</td>
+			<td>تاريخ عضويت</td>
+			<td>سطح</td>
+			<td>جزئيات</td>
+			<td>تصوير</td>
+		</tr>
+		<member><tr[style value=( style="background-color: #f5f7fa")]>
+			<td>[username]</td>
+			<td>[nickname]</td>
+			<td><registered>[date] در ساعت [time]</registered></td>
+			<td>[level]</td>
+			<td><img src="images/themes/silver/profile.gif" class="btn" onClick="window.location='[profile]'" title="نمايش مشخصات" /><contact> <message><img src="images/themes/silver/pm.gif" class="btn" onClick="window.open('[pm]', '_blank', 'width=400, height=425, status=yes, scrollbars=yes, resizable=yes')" title="فرستادن پيام خصوصي" /> </message><email><img src="images/themes/silver/email.gif" class="btn" onClick="window.location='mailto:[email]'" title="ارسال ايميل به اين کاربر" /> </email><url><img src="images/themes/silver/site.gif" class="btn" onClick="window.open('[url]', '_blank')" title="آدرس اينترنتي اين کاربر" /></url></contact></td>
+			<td><avatar><img border="0" src="[url]"></avatar></td>
+		</tr></member>
+	</table>
+</div><div id="downcenter"><div id="downleft"><div id="downright"></div></div></div></div>
+</body>
+</html></member list>]]></item>
+		<item name="membership"><![CDATA[<html>
+<head>
+<title>عضويت</title>
+<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+<link rel="stylesheet" href="[style]" type="text/css" />
+<script src="[main script]"></script>
+</head>
+<body bgColor="#bfd1dd" background="images/themes/silver/back ground.gif">
+<membership>
+<div id="window" style="left: 40%; position: absolute; top: 30%; text-align: center; width: 300">
+<div id="upcenter">
+<div id="upleft">
+<div id="upright">
+<div id="title">عضويت</div>
+</div>
+</div>
+</div>
+<div id="body" style="direction: ltr">
+<table align="center">
+	<status><tr>
+		<td colspan="2" align="right">
+			[status]
+		</td>
+	</tr></status>
+	<main><tr>
+		<td colspan="2" align="right">!لطفا فرم زير را پر کنيد</td>
+	</tr>
+	<tr>
+		<td align="left">[username value=(20)]</td>
+		<td align="right">:شناسه کاربري </td>
+	</tr>
+	<tr>
+		<td align="left">[password value=(20)]</td>
+		<td align="right">:کلمه عبور</td>
+	</tr>
+	<tr>
+		<td align="left">[repassword value=(20)]</td>
+		<td align="right">:تکرار کلمه عبور</td>
+	</tr>
+	<tr>
+		<td align="left">[email value=(20)]</td><td align="right">:پست الکترونيک</td>
+	</tr>
+	<tr>
+		<td align="left">[security code] [security code field]</td>
+		<td align="right">:کد امنيتي</td>
+	</tr>
+	<tr>
+		<td align="center">[submit value=(ارسال)]</td>
+		<td align="center">[reset value=(مجدد)]</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right" dir="rtl" style="color: #0066cc">
+			[result]
+		</td>
+	</tr></main>
+</table>
+</div>
+<div id="downcenter">
+<div id="downleft">
+<div id="downright">
+</div>
+</div>
+</div>
+</div></membership>
+</body>
+</html>]]></item>
+		<item name="emoticons"><![CDATA[<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+<title>شکلک‌ها</title>
+<style>
+td {
+	font-family: Tahoma, sans-serif; font-size: 8pt; color: #5B5743
+}
+A:link {
+	text-decoration: none;color: #965100
+}
+A:visited {
+	text-decoration: none;color: #965100
+}
+A:active {
+	text-decoration: underline;color: #000000
+}
+A:hover {
+	text-decoration: underline;color: #000000
+}
+</style>
+</head>
+<body>
+<table style="border: #FEFFF3 1px solid" cellSpacing="0" cellPadding="2" width="100%" border="0">
+	<tr>
+		<td align="middle" style="background-color: #F6F3E0;color: #5B5743; font-weight: bold">شکلک‌ها</td>
+	</tr>
+</table>
+<br />
+<table cellSpacing="0" cellPadding="2" width="100%" border="0" style="color: #5B5743; font-size: 7pt;text-align: right;border: #FEFFF3 1px solid" style="background-color: #F6F3E0">
+	<emoticons>
+	<tr style="background-color: [background color value=(#FEFFF3)]">
+		<td><a href="javascript:void(0)" onClick="parent.opener.document.getElementById('content').innerHTML += '[code]'"><img src="[url]" border="0"></a></td>
+		<td>[code]</td>
+		<td>[description]</td>
+	</tr>
+	</emoticons>
+</table>
+<br />
+<table cellSpacing="0" cellPadding="2" width="100%" border="0">
+	<tr>
+		<td style="background-color: #F6F3E0; color: #5B5743; font-weight: bold" align="middle"><a href="javascript:window.close()">close</a></td>
+	</tr>
+</table>
+</body>
+</html>]]></item>
+		<item name="login"><![CDATA[<html>
+<head>
+<title>ورود</title>
+<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+<link rel="stylesheet" href="[style]" type="text/css" />
+<script src="[main script]"></script>
+</head>
+<body background="images/themes/silver/back ground.gif" dir="ltr">
+<log in><div id="window" style="left: 40%; position: absolute; top: 40%; text-align: center; width: 300">
+<div id="upcenter">
+<div id="upleft">
+<div id="upright">
+<div id="title">ورود</div>
+</div>
+</div>
+</div>
+<div id="body" style="direction: ltr">
+<table align="center">
+	<tr>
+		<td colspan="2" align="right">!لطفا شناسه کاربري و کلمه عبور خود را وارد کنيد</td>
+	</tr>
+	<tr>
+		<td align="left">[username value=(20)]</td>
+		<td align="right">:شناسه کاربري</td>
+	</tr>
+	<tr>
+		<td align="left">[password value=(20)]</td>
+		<td align="right">:کلمه عبور</td>
+	</tr>
+	<tr>
+		<td align="left">[security code field] [security code]</td>
+		<td align="right">:کد امنيتي</td>
+	</tr>
+	<tr>
+		<td align="center">[remember value=(مرا به خاطر بسپار)]</td>
+		<td align="center">[submit value=(ورود)]</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right" style="color: #0066cc">
+			[result]
+		</td>
+	</tr>
+</table>
+</div>
+<div id="downcenter">
+<div id="downleft">
+<div id="downright">
+</div>
+</div>
+</div>
+</div></log in>
+</body>
+</html>]]></item>
+		<item name="control panel"><![CDATA[<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+	<title>.:|کنترل پنل|:.</title>
+	<link rel="stylesheet" type="text/css" href="[style]">
+	<script src="[main script]" language="javascript" type="text/javascript"></script>
+	<script src="[control panel script]"></script>
+</head>
+<body bgColor="#667079" background="images/themes/silver/bg.gif" topmargin="0">
+<center>
+<div class="bc" dir="rtl">
+<!-- Header -->
+	<div class="bc_h">
+			<div class="bc_h_right">
+				<span class="bc_h_st" id="[result]">آخرين ورود شما <last login>[date] در ساعت [time]</last login> بوده است.</span>
+				<div class="bc_h_na" align="right"> [username] خوش آمديد ... [<a href="[log out]" style="color: #000000">خروج</a>]<img border="0" src="images/themes/silver/gt.gif" width="17" height="15"></div>
+			</div>
+		</div> 
+<!-- Top Menu -->
+	<div class="bc_tm">
+		<div id="[menu]"></div>
+		<div id="loading" style="display: none; float: left; padding:0px 10px 0px 10px"><img border="0" src="images/themes/silver/loading.gif" width="16" height="16" title="در حال بارگذاري صفحه ..." /></div>
+		</div>
+<!-- Content Body -->
+<div class="bc_cb" align="center">
+	<table width="99%">
+		<tr>
+			<td width="160px" valign="top">
+				<div id="[sub menu]" class="bc_side" style="display: none"></div>
+			</td>
+			<td valign="top">
+				<span class="bc_center" id="[content]">به پنل مديريت خوش آمديد!</span>
+			</td>
+			<td width="160px" valign="top" style="font-family: Tahoma; font-size: 8pt" id="[sidebar]">
+				<state>
+				<div class="bc_side" dir="rtl">
+					<div class="bc_side_head">موقعيت</div>
+					<div class="bc_side_item">
+						<comment><span class="arrow">» </span>نظرات تاييد نشده: [inactive]<br />
+						<span class="arrow">» </span>نظرات خصوصي جديد: [private]<br /></comment>
+						<guestbook><span class="arrow">» </span>يادبودهاي تاييد نشده: [inactive]<br />
+						<span class="arrow">» </span>يادبودهاي خصوصي جديد: [private]<br /></guestbook>
+						<message><span class="arrow">» </span>پيام‌هاي جديد: [new]<br /></message>
+						<link><span class="arrow">» </span>لينک‌هاي تاييد نشده: [inactive]</link>
+					</div>
+				</div>
+				</state>
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- Footer -->
+	<div class="bc_ft">
+		<div style="float: left">Copyright © 2006-2007 <b>Raha Group™</b>.All Right Reserved</div>
+		<div style="float: right"><span style="cursor: pointer" onClick="[refresh]">بارگذاري مجدد</span> | <a href="[site url]" target="_blank" style="color: #ffffff">نمايش سايت</a></div>
+	</div>
+</div>
+</center>
+</body>
+</html>]]></item>
+		<item name="style"><![CDATA[/*
+Name: نقره‌اي
+URL: https://raha.group
+Description: قالب پيش فرض سايت
+Version: 3.0
+Author: مهدي نظارتي زاده
+Author URL: https://raha.group
+*/
+#footer #center {
+	height: 37px; background: url('images/themes/silver/footer center.gif') repeat-x
+}
+#footer #left {
+	height: 37px; background: url('images/themes/silver/footer left.gif') no-repeat left
+}
+#footer #right {
+	height: 37px; background: url('images/themes/silver/footer right.gif') no-repeat right
+}
+#footer #body {
+	padding-right: 190px; padding-top: 3px; width: 100%; direction: rtl
+}
+input, button, select {
+	font-family: Tahoma; font-size: 8pt;
+}
+a {
+	text-decoration: none
+}
+a:link {
+	font-size: 8pt; font-family: Tahoma; color: #0066CC; text-decoration: none;
+}
+a:visited {
+	font-size: 8pt; font-family: Tahoma; color: #0066CC; text-decoration: none;
+}
+a:hover {
+	font-size: 8pt; font-family: Tahoma; color: #009900; text-decoration: none;
+}
+a img {
+	border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none
+}
+fieldset {
+	float: right; margin-right: 5px
+}
+table {
+	font-family: Tahoma; font-size: 8pt
+}
+.input, .button, .select, .textarea {
+	font-family: Tahoma; font-size: 8pt; border: 1px solid #999999; background-color: #F8F8F8
+}
+.radiobutton, .checkbox {
+	font-family: Tahoma; font-size: 8pt; cursor: Hand
+}
+.result {
+	color: #0066CC
+}
+.sidebar form {
+	margin: 0; padding: 0
+}
+.sidebar h1 {
+	width: 175px; height: 23px; margin: 0px; background: url('images/themes/silver/menu up.gif') no-repeat right; padding-top: 3px; text-align: center; color: #000000; font-family: Tahoma; font-size: 8pt; font-weight: normal
+}
+.sidebar h2 {
+	width: 175px; height: 19px; margin-top: 0; background: url('images/themes/silver/menu down.gif') no-repeat right; padding-top: 3px; text-align: center; color: #000000; font-family: Tahoma; font-size: 8pt; font-weight: normal
+}
+.sidebar ul {
+	width: 175px; margin: 0px; border: 1px solid #C8C6C6; background-color: #ffffff; padding: 5px 0px 5px 0px; font-family: Tahoma; font-size: 8pt; line-height: 1.5em; text-align: center; vertical-align: center; direction: rtl
+}
+.sidebar ul ul{
+	margin: -6; padding: 5; background: none; border: none;
+}
+#window #upcenter {
+	height: 23px; background: url('images/themes/silver/menu up center.gif') repeat-x
+}
+#window #upleft {
+	height: 23px; background: url('images/themes/silver/menu up left.gif') no-repeat left
+}
+#window #upright {
+	padding-right: 25px; height: 23px; background: url('images/themes/silver/menu up right.gif') no-repeat right
+}
+#window #downcenter {
+	height: 19; background: url('images/themes/silver/menu down center.gif') repeat-x
+}
+#window #downleft {
+	height: 19px; background: url('images/themes/silver/menu down left.gif') no-repeat left
+}
+#window #downright {
+	height: 19px; background: url('images/themes/silver/menu down right.gif') no-repeat right
+}
+#window #body {
+	margin: 5px; border: 1px solid #C8C6C6; background-color: #ffffff; padding: 5px 0px 5px 0px; font-family: Tahoma; font-size: 8pt; line-height: 1.5em; text-align: center; direction: rtl
+}
+#window #title{
+	padding-top: 3px; text-align: center; color: #000000
+}
+li, li li li {
+	list-style-image: url('images/themes/silver/li.gif'); list-style-type: none
+}
+li li {
+	list-style-image: url('images/themes/silver/li li.gif'); list-style-type: none
+}
+code {
+	border-right: #e7e7e7 1px solid; padding-right: 5px; border-top: #e7e7e7 1px solid; padding-left: 5px; font-size: 0.95em; padding-bottom: 3px; border-left: #e7e7e7 1px solid; width: 100%; direction: ltr; padding-top: 2px; border-bottom: #e7e7e7 1px solid; font-family: verdana; background-color: #f8f9fa
+}
+body {
+	font-size: 8pt; font-family: tahoma; scrollbar-face-color: #dee3e7; scrollbar-light-color: #ffffff; scrollbar-shadow-color: #dee3e7; scrollbar-3dlight-color: #d1d7dc; scrollbar-arrow-color: #006699; scrollbar-track-color: #efefef; scrollbar-darkshadow-color: #98aab1
+}
+#comment #downcenter {
+	height: 19; width: 99%; background: url('images/themes/silver/menu down center.gif') repeat-x
+}
+#comment #downleft {
+	height: 19px; background: url('images/themes/silver/menu down left.gif') no-repeat left
+}
+#comment #downright {
+	height: 19px; background: url('images/themes/silver/menu down right.gif') no-repeat right
+}
+#comment #upcenter {
+	height: 23px; width: 99%; background: url('images/themes/silver/menu up center.gif') repeat-x
+}
+#comment #upleft {
+	height: 23px; background: url('images/themes/silver/menu up left.gif') no-repeat left
+}
+#comment #upright {
+	height: 23px; background: url('images/themes/silver/menu up right.gif') no-repeat right
+}
+#comment #title {
+	width: 99%; padding-top: 3px; padding-right: 20px; text-align: right; color: #000000
+}
+#comment #body {
+	width: 99%; border:1px solid #C8C6C6; background-color: #ffffff; padding: 5px 0px 5px 0px; font-family: tahoma; font-size: 8pt; line-height: 1.5em; text-align: right; direction: rtl
+}
+table {
+	font-family: Tahoma; font-size: 8pt
+}
+.table, .post table {
+	padding: 5px; width: 100%; border-spacing: 0px 0px; border-collapse: collapse; border-bottom: solid 1px #b6c0c3; border-right: solid 1px #b6c0c3; background-color: #ffffff
+}
+.table td, .post th, .post td {
+	border-top: solid 1px #b6c0c3; border-left: solid 1px #b6c0c3
+}
+.post th {
+	background-color: #d6dbdf
+}
+.post textarea {
+	border-right: #d6dbdf 1px solid; padding-right: 0px; border-top: #d6dbdf 1px solid; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; border-left: #d6dbdf 1px solid; padding-top: 0px; border-bottom: #d6dbdf 1px solid
+}
+.code_header {
+	border-right: #000 1px dashed; padding-right: 4px; border-top: #000 1px dashed; padding-left: 4px; font-weight: bold; background: #fff; padding-bottom: 4px; margin: 8px auto 0px; border-left: #000 1px dashed; color: #000; padding-top: 4px; border-bottom: #000 0px dashed;
+	border-top-width: 0px; border-left-width: 0px; background: none transparent scroll repeat 0% 0%; border-bottom-width: 0px; direction: ltr; text-align: left; border-right-width: 0px
+}
+.code_body {
+	border-right: #000 1px dashed; padding-right: 4px; border-top: #000 0px dashed; padding-left: 4px; background: #fff; padding-bottom: 4px; margin: 0px auto 8px; border-left: #000 1px dashed; color: #000; padding-top: 4px; border-bottom: #000 1px dashed; font-family: monospace;
+	border-right: #ddd 1px solid; border-top: #000 1px solid; background: none transparent scroll repeat 0% 0%; border-left: #000 1px solid; direction: ltr; border-bottom: #ddd 1px solid; text-align: left
+}
+.term {
+	border-right: #e7e7e7 1px solid; padding-right: 5px; border-top: #e7e7e7 1px solid; padding-left: 5px; font-size: 0.95em; padding-bottom: 3px; border-left: #e7e7e7 1px solid; direction: rtl; padding-top: 2px; border-bottom: #e7e7e7 1px solid; font-family: Tahoma; background-color: #f8f9fa; text-align: right; padding: 0px 0px 0px 5px
+}
+#user {
+	text-align: right;
+}
+#user .online, #user .offline {
+	background: url('images/themes/silver/user.gif') no-repeat; width: 16px; height: 16px; float: right
+}
+#user .offline {
+	filter: progid: DXImageTransform.Microsoft.Alpha(opacity=30); -moz-opacity: 0.3; opacity: 0.3
+}
+.us_wlist {
+	border: 1px solid #DEE2E7; background-color: #F7F8F9; margin-top: 4px; font-family: Tahoma; font-size: 9pt; color: #666666; padding-left: 6; padding-right: 6; padding-top: 2; padding-bottom: 2
+}
+.us_wlist_in {
+	border: 1px solid #F1F3F5; padding: 3px; text-align: right
+}
+.bc {
+	width: 97.8%
+}
+.bc_h {
+	background-image: url(images/themes/silver/tbg.gif); height: 48px
+}
+.bc_h_right {
+	float: right; padding-top: 25px; height: 20px
+}
+.bc_h_st {
+	font-size: 10px; float: left; color: #666666;
+}
+.bc_h_na {
+	padding-right: 10px; font-weight: 600; font-size: 8pt; float: left; color: #e8edef; height: 17px; background-color: #87a2b3
+}
+.bc_tm {
+	border-right: #88a2b1 1px solid; padding-right: 3px; border-left: #88a2b1 1px solid; padding-top: 3px; border-bottom: #88a2b1 6px solid; height: 25px; background-color: #f0f3f4
+}
+.bc_cb {
+	border-right: #6e8ea3 1px solid; padding-right: 4px; border-top: #6e8ea3 1px solid; padding-left: 4px; padding-bottom: 4px; border-left: #6e8ea3 1px solid; padding-top: 4px; border-bottom: #6e8ea3 1px solid; background-color: #ffffff
+}
+.bc_side {
+	border-right: #dee2e7 1px solid; border-top: #dee2e7 1px solid; border-left: #dee2e7 1px solid; width: 160px; border-bottom: #dee2e7 1px solid
+}
+.bc_side_head {
+	border-right: #c4d0d9 1px solid; padding-right: 6px; border-top: #c4d0d9 1px solid; padding-left: 5px; font-weight: bold; font-size: 8pt; background-image: url(images/themes/silver/bcsihbg.gif); padding-bottom: 4px; border-left: #c4d0d9 1px solid; color: #587385; padding-top: 3px; border-bottom: #c4d0d9 1px solid; background-repeat: repeat-x; font-family: tahoma; background-color: #e8edef
+}
+.bc_side_item {
+	padding-right: 5px; font-size: 8pt; background-image: url(images/themes/silver/bcsidbg.gif); padding-bottom: 8px; padding-top: 8px; background-repeat: repeat-x; font-family: tahoma; background-color: #ffffff
+}
+.bc_side_item a:link {
+	color: #3a3031
+}
+.bc_side_item a:visited {
+	color: #3a3031
+}
+.bc_side_item a:hover {
+	color: #b70000
+}
+.side_item {
+	color: #3a3031
+}
+.side_item_select {
+	color: #b70000
+}
+.bc_ft {
+	padding-right: 10px; padding-left: 5px; font-size: 8pt; padding-bottom: 3px; color: #ffffff; padding-top: 2px; font-family: tahoma; height: 15px; background-color: #88a2b1; text-align: left
+}
+.bc_tm_item {
+	font-weight: bold; font-size: 8pt; float: right; width: 120px; cursor: pointer; color: #2e4756; padding-top: 2px; height: 25px; text-align: center
+}
+.bc_tm_item_sel {
+	font-weight: bold; font-size: 8pt; float: right; background-image: url(images/themes/silver/tmbg.gif); width: 120px; color: #ffffff; padding-top: 3px; height: 25px; background-color: #88a2b1; text-align: center
+}
+.bc_center {
+	float: right; margin-bottom: 5px; width: 100%; text-align: center
+}
+.bc_center_title {
+	border-right: #aebfca 1px solid; padding-right: 6px; border-top: #aebfca 1px solid; padding-left: 6px; font-weight: bold; font-size: 9pt; background-image: url(images/themes/silver/ct.gif); padding-bottom: 4px; border-left: #aebfca 1px solid; color: #465b6a; padding-top: 3px; border-bottom: #aebfca 1px solid; font-family: tahoma; background-color: #e8edef; text-align: right
+}
+.bc_center_tb {
+	border-top-width: 1px; border-right: #dee2e7 1px solid; padding-right: 5px; padding-left: 5px; font-size: 8pt; background-image: urlimages/themes/silver/bccbg.gif); padding-bottom: 5px; border-left: #dee2e7 1px solid; padding-top: 5px; border-bottom: #dee2e7 1px solid; background-repeat: repeat-x; font-family: tahoma; background-color: #f8f9fa
+}
+.bc_center_tb a:link {
+	color: #465b6a
+}
+.bc_center_tb a:visited {
+	color: #465b6a
+}
+.arrow {
+	font-weight: bold; font-size: 8pt; color: #0066cc; font-family: tahoma
+}
+#calendar {
+	empty-cells: hide; width: 140px; background-color: #ffffff; color: #8bacd7; font-size: 1em; margin: 0 0 0 0; padding: 0 0 0 0
+}
+#calendar #next a {
+	display: block; background-color: white; text-decoration: none; text-align: right; font-size: 1em; margin: 0 0 0 0; padding: 0 0 0 0
+}
+#calendar #prev a {
+	display: block; background-color: white; text-decoration: none; text-align: left; font-size: 1em; margin: 0 0 0 0; padding: 0 0 0 0
+}
+#calendar a {
+	display: block; background-color: #dfecfb
+}
+#calendar a:visited {
+	display: block
+}
+#calendar td {
+	padding: 0; margin: 0; text-align: center; background-color: #ffffff
+}
+#calendar caption {
+	text-align: right; background: #faf9e8; border: 1px solid #dddddd; -moz-border-radius: 5px; padding: 3px 5px 3px 3px; margin: 0 0 6px 0; color: #93425a; font-family: tahoma, verdana, sans-serif; font-size: 1.0em; font-weight: lighter
+}
+#calendar .today {
+	color: #93425a
+}
+#calendar .weekday {
+	border: solid 1px #ffffff; padding: 4px; margin: 2px; color: #0066cc; background: #ffffff
+}
+#calendar .day {
+	border: solid 1px #ffffff; padding: 2px; color: #0066cc
+}
+#calendar .weekend {
+	border: solid 1px #ffffff; padding: 2px; color: 99cc00; background: #ffffff
+}
+#calendar .endday {
+	border: solid 1px #ffffff; padding: 2px; color: 99cc00
+}
+.ratings {
+	position: relative; margin: 0px; display: inline
+}
+.ratings li {
+	display: inline; float: right; background: url(images/themes/silver/ratings.png) no-repeat; width: 12px; height: 11px
+}
+.ratings .off {
+	background-position: 0 0
+}
+.ratings .over {
+	background-position: -12px 0
+}
+.ratings .on {
+	background-position: -24px 0
+}
+.ratings .half {
+	background-position: -36px 0
+}
+.tborder {
+	background: #d1dae7; color: #587aab; margin: -5
+}
+.thead {
+	background: #e6e6d8 url('images/themes/silver/forum/strip back.gif') repeat-x top left; color: #3f3f3f; font: 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.alt1, .alt1Active {
+	background: #eeeff1; color: #000000; border-left: 1px solid #f5f5e7; border-top: 1px solid #f5f5e7;
+}
+.alt2 {
+	background: #e5e7ee; color: #000000; border-left: 1px solid #f5f5e7; border-top: 1px solid #f5f5e7;
+}
+.pageBackground {
+	background: #7898c7; color: #e7e7e7; font: 10px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif; padding: 3px 6px 3px 6px; white-space: nowrap;
+}
+.pageBorder {
+	background: #D1D1E1; color: #000000; border: 1px solid #5077b0;
+}
+.pageBorder td, .pageBorder a:link {
+	padding: 2px 4px 2px 4px; font-size: 10px
+}
+.lastpost, .button, .btn {
+	cursor: hand; vertical-align: middle
+}
+.disabled {
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=30); -moz-opacity: 0.3; opacity: 0.3; cursor: default
+}
+/*Editor Style*/
+.editor.body {
+	scrollbar-3dlight-color: #F0F0EE;
+	scrollbar-arrow-color: #676662;
+	scrollbar-base-color: #F0F0EE;
+	scrollbar-darkshadow-color: #DDDDDD;
+	scrollbar-face-color: #E0E0DD;
+	scrollbar-highlight-color: #F0F0EE;
+	scrollbar-shadow-color: #F0F0EE;
+	scrollbar-track-color: #F5F5F5;
+}
+.color table, .color td {
+	margin: 0;
+	padding: 0px
+}
+.color td a {
+	width: 9px;
+	height: 9px;
+	overflow: hidden;
+	border: 1px solid #808080
+}
+.emoticon table, .emoticon td {
+	margin: 0;
+	padding: 0px
+}
+.emoticon td a {
+	width: 9px;
+	height: 9px;
+	overflow: hidden;
+	border: 1px solid #808080
+}
+.popup {
+	background: ButtonFace;
+	margin: 0px;
+	padding: 0px;
+	cursor: hand;
+	border: 0px;
+	cellspacing: 1px;
+	cellpadding: 0px
+	border-left: buttonhighlight 1px solid;
+	border-right: #808080 1px solid;
+	border-top: buttonhighlight 1px solid;
+	border-bottom: #808080 1px solid;
+}
+/*Tree Menu Style*/
+.dtree {
+	font-family: tahoma;
+	font-size: 11px;
+	color: #666;
+	/*white-space: nowrap;*/
+}
+.dtree img {
+	border: 0px;
+	vertical-align: middle;
+}
+.dtree a {
+	color: #333;
+	text-decoration: none;
+}
+.dtree a.node, .dtree a.nodeSel {
+	/*white-space: nowrap;*/
+	padding: 1px 2px 1px 2px;
+}
+.dtree a.node:hover, .dtree a.nodeSel:hover {
+	color: #333;
+	/*text-decoration: underline;*/
+}
+.dtree a.nodeSel {
+	background-color: #c0d2ec;
+}
+.dtree .clip {
+	overflow: hidden;
+}]]></item>
+		<item name="script"><![CDATA[startColor = "#0066CC";
+endColor = "#99cc00";
+stepIn = 12;
+stepOut = 12;
+autoFade = true; 
+sloppyClass = false; 
+hexa = new makearray(16);
+for (var i=0; i<10; i++)
+	hexa[i] = i;
+hexa[10] = "a";
+hexa[11] = "b";
+hexa[12] = "c";
+hexa[13] = "d";
+hexa[14] = "e";
+hexa[15] = "f";
+document.onmouseover = domouseover;
+document.onmouseout = domouseout;
+startColor = dehexize(startColor.toLowerCase());
+endColor = dehexize(endColor.toLowerCase());
+var fadeId = new Array();
+function dehexize(Color) {
+	var colorArr = new makearray(3);
+	for (i=1; i<7; i++)
+		for (j=0; j<16; j++)
+			if (Color.charAt(i) == hexa[j])
+				if (i%2 != 0)
+					colorArr[Math.floor((i-1)/2)] = eval(j)*16;
+				else
+					colorArr[Math.floor((i-1)/2)] += eval(j);
+	return colorArr;
+}
+function domouseover() {
+	if (document.all) {
+		var srcElement = event.srcElement;
+		if ((srcElement.tagName == "A" && autoFade) || srcElement.className == "fade" || (sloppyClass && srcElement.className.indexOf("fade") != -1))
+			fade(startColor, endColor, srcElement.uniqueID, stepIn); 
+	}
+}
+function domouseout() {
+	if (document.all) {
+		var srcElement = event.srcElement;
+		if ((srcElement.tagName == "A" && autoFade) || srcElement.className == "fade" || (sloppyClass && srcElement.className.indexOf("fade") != -1))
+			fade(endColor, startColor, srcElement.uniqueID, stepOut);
+	}
+}
+function makearray(n) {
+	this.length = n;
+	for (var i = 1; i <= n; i++)
+		this[i] = 0;
+	return this;
+}
+function hex(i) {
+	if (i<0)
+		return "00";
+	else if (i>255)
+		return "ff";
+	else
+		return "" + hexa[Math.floor(i/16)] + hexa[i%16];
+}
+function setColor(r, g, b, element) {
+	var hr = hex(r);
+	var hg = hex(g);
+	var hb = hex(b);
+	element.style.color = "#"+hr+hg+hb;
+}
+function fade(s, e, element, step) {
+	var sr = s[0];
+	var sg = s[1];
+	var sb = s[2];
+	var er = e[0];
+	var eg = e[1];
+	var eb = e[2];
+	if (fadeId[0] != null && fade[0] != element) {
+		setColor(sr, sg, sb, eval(fadeId[0]));
+		var i = 1;
+		while (i<fadeId.length) {
+			clearTimeout(fadeId[i]);
+			i++;
+		}
+	}
+	for (var i=0; i<=step; i++)
+		fadeId[i+1] = setTimeout("setColor(Math.floor(" +sr+ " *(( " +step+ " - " +i+ " )/ " +step+ " ) + " +er+ " * (" +i+ "/" +step+ ")), Math.floor(" +sg+ " * (( " +step+ " - " +i+ " )/ " +step+ " ) + " +eg+ " * (" +i+ "/" +step+")),Math.floor(" +sb+ " * ((" +step+ "-" +i+ ")/" +step+ ") + " +eb+ " * (" +i+ "/" +step+ ")),"+element+");", i*step);
+	fadeId[0] = element;
+}
+function Rate(maxRatings) {
+	this.maxRatings = maxRatings;
+	this.over = function(id, score) {
+		for (i=1; i<=score; i++)
+			document.getElementById("rating-"+id+"-"+i).className = "over";
+	}
+	this.out = function(id, average) {
+		for (i=1; i<=this.maxRatings; i++)
+			document.getElementById("rating-"+id+"-"+i).className = this.style(i, average);
+	}
+	this.submit = function(id, score) {
+		if (cookie.enabled()) {
+			request("do=ratePost&score="+score+"&id="+id, "post-ratings-"+id);
+			cookie.set("post-rated-"+id, score);
+		} else
+			alert("لطفا Cookies را در مرورگر خود فعال نماييد");
+	}
+	this.style = function(score, average) {
+		return score <= average || score-average<.25 ? "on" : score-average<.75 ? "half" : "off";
+	}
+	this.ratings = function(id, votes) {
+		var count = 0, average = 0, ratings = "";
+		for (i=0; i<this.maxRatings; i++) {
+			if (!votes[i])
+				votes[i] = 0;
+			count += votes[i];
+			average += (i+1)*votes[i];
+		}
+		average /= count ? count : 1;
+		for (i=1; i<=this.maxRatings; i++)
+			ratings += "<li id=rating-"+id+"-"+i+(!cookie.get("post-rated-"+id) ? ' onmouseover="rate.over('+id+', '+i+')" onclick="rate.submit('+id+', '+i+')" onmouseout="rate.out('+id+', '+average+')" style="cursor: pointer"' : "")+' class='+this.style(i, average)+' title="'+i+' امتياز ('+votes[i-1]+' راي از '+count+' راي)"></li>';
+		document.write("<p><span id=post-ratings-"+id+"><ul class=ratings>"+ratings+"</ul></span></p>");
+	}
+}
+function copy(id) {
+	document.getElementById(id).select();
+	document.getElementById(id).focus();
+	textRange = document.getElementById(id).createTextRange();
+	textRange.execCommand("RemoveFormat");
+	textRange.execCommand("Copy");
+}
+document.onselectstart = new Function("return false");
+document.oncontextmenu = new Function("return false");
+var rate = new Rate(configuration(post->max ratings));]]></item>
+		<item name="php script"><![CDATA[function CPJS() {
+	return <<<JS
+function ControlPanel(l) {
+	this.cache = new Array();
+	this.cfg = {tab : "CPM", subMenu : "CPSM", sidebar : "CPS", content : "CPD", result : "result"};
+	this.tab = function() {
+		var c = "", i;
+		for (i=0; i<this.cache["menu"].length; i++) {
+			if (!document.getElementById("CPPD"+i)) {
+				var getBodyTag = document.getElementsByTagName("body")[0];
+				setdiv = document.createElement("div");
+				setdiv.id = "CPPD"+i;
+				setdiv.style.display = "none";
+				getBodyTag.appendChild(setdiv);
+			}
+			c += '<div id="CPM'+i+'" class="bc_tm_item" onclick="return CP.onClick('+i+')" title="'+this.cache["menu"][i][0][2]+'"><img src="images/themes/silver/control panel/'+this.cache["menu"][i][0][3]+'.gif" />'+this.cache["menu"][i][0][0]+'</div>';
+		}
+		toggle(4, this.cfg.tab, c);
+	}
+	this.onClick = function(i) {
+		this.cache["CPPD"+this.cache.selectedTab] = toggle(4, this.cfg.content);
+		this.cache.selectedTab = i;
+		if(typeof this.cache["CPPD"+i] == "undefined")
+			this.click(this.cache["menu"][i][0][1], i);
+		return this.menu(this.cache["menu"][i][1], i);
+	}
+	this.menu = function(m, i) {
+		var c = "", j, n;
+		this.tab();
+		toggle(3, this.cfg.subMenu, "");
+		toggle(4, this.cfg.result, "");
+		toggle(3, this.cfg.sidebar, "");
+		toggle(3, this.cfg.content, "");
+		toggle(2, "CPM"+i, "bc_tm_item_sel");
+		toggle(4, this.cfg.content, this.cache["CPPD"+i]);
+		for (j=0; j<m.length; j++) {
+			c += '<div class="bc_side_head"><img src="images/themes/silver/control panel/'+m[j][2]+'.gif" />'+m[j][0]+'</div><div class="bc_side_item">';
+			for (n=0; n<m[j][1].length; n++)
+				c += ' <span class="arrow">» </span> <a href="'+m[j][1][n][1]+'" onclick="return CP.click(\''+escape(m[j][1][n][1])+'\', '+i+', this)" title="'+m[j][1][n][2]+'">'+m[j][1][n][0]+'</a><br>';
+			c += "</div>";
+		}
+		toggle(4, this.cfg.subMenu, c);
+	}
+	this.click = function(u, i, s) {
+		toggle(3, this.cfg.sidebar, "");
+		toggle(3, this.cfg.content, "");
+		if (typeof s != "undefined") {
+				for (var l=document.getElementById("CPSM").getElementsByTagName("a"), j=0; j<l.length; j++)
+					l[j].style.color = "#3a3031";
+			s.style.color = "#b70000";
+		}
+		d = unescape(u).split("javascript:");
+		d[1] != null ? eval(d[1]) : load(d[0], this.cfg.content);
+		return false;
+	}
+	this.item = function(i, c) {
+		return "<div class=us_wlist id="+i+"><div class=us_wlist_in>"+c+"</div></div>";
+	}
+	this.cache["menu"] = l;
+}
+if (document.all || document.layers) {
+	self.moveTo(0, 0);
+	self.resizeTo(screen.availWidth, screen.availHeight);
+}
+JS;
+}]]></item>
+	</theme>
+	<templates>
+		<item name="banned ip"><![CDATA[<html dir="rtl">
+<head>	
+	<title>[site title]</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+	<style>
+		A {
+			font-size: 8pt; font-family: Tahoma; text-decoration: none
+		}
+		A:link {
+			color: #0066CC
+		}
+		A:visited {
+			color: #0066CC
+		}
+		A:hover {
+			color: #009900
+		}
+	</style>
+</head>
+<body scroll="no">
+<div align="center">
+<table height="100%">
+	<tr>
+		<td width="400px">
+			<div style="border-right: #e7e7e7 1px solid; padding-right: 5px; border-top: #e7e7e7 1px solid; padding-left: 5px; font-size: 12px; padding-bottom: 3px; border-left: #e7e7e7 1px solid; width: 100%; direction: ltr; padding-top: 2px; border-bottom: #e7e7e7 1px solid; font-family: tahoma; background-color: #f8f9fa; text-align: center">
+				<a href="[site url]" title="[site description]">[site title]</a><p>.به دليل <b>[infraction]</b> ورود شما به سايت ممنون است<br />.ورود شما تا <countdown><day>[day] روز،</day><hour>[hour] ساعت،</hour><minute>[minute] دقيقه،</minute><second>[second] ثانيه،</second></countdown> ديگر امکان پذير است
+			</div>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>]]></item>
+		<item name="coming soon"><![CDATA[<html dir="rtl">
+<head>	
+	<title>Coming Soon</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+	<style>
+		A {
+			font-size: 8pt; font-family: Tahoma; text-decoration: none
+		}
+		A:link {
+			color: #0066CC
+		}
+		A:visited {
+			color: #0066CC
+		}
+		A:hover {
+			color: #009900
+		}
+	</style>
+</head>
+<body scroll="no">
+<div align="center">
+<table height="100%">
+	<tr>
+		<td width="300px">
+			<div style="border-right: #e7e7e7 1px solid; padding-right: 5px; border-top: #e7e7e7 1px solid; padding-left: 5px; font-size: 12px; padding-bottom: 3px; border-left: #e7e7e7 1px solid; width: 100%; direction: ltr; padding-top: 2px; border-bottom: #e7e7e7 1px solid; font-family: tahoma; background-color: #f8f9fa; text-align: center">
+				<a href="[site url]" title="[site description]">[site title]</a><p>.سايت در حال بازسازي است<p>.لطفا بعدا مراجعه فرماييد
+			</div>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>]]></item>
+		<item name="download post"><![CDATA[<!-- Saved From :: [site url] -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+	<style>
+		a {
+			text-decoration: none
+		}
+		a:link {
+			color: #0066cc
+		}
+		a:visited {
+			color: #0066cc
+		}
+		a:hover {
+			color: #009900
+		}
+		body {
+			font-size: 8pt; font-family: tahoma; color: #000000; direction: rtl; text-align: center; scrollbar-face-color: #dee3e7; scrollbar-light-color: #ffffff; scrollbar-shadow-color: #dee3e7; Sscrollbar-3dlight-color: #d1d7dc; scrollbar-arrow-color: #006699; scrollbar-track-color: #efefef; scrollbar-darkshadow-color: #98aab1
+		}
+		code {
+			border-right: #e7e7e7 1px solid; padding-right: 5px; border-top: #e7e7e7 1px solid; padding-left: 5px; font-size: 0.95em; padding-bottom: 3px; border-left: #e7e7e7 1px solid; width: 100%; direction: ltr; padding-top: 2px; border-bottom: #e7e7e7 1px solid; font-family: verdana; background-color: #f8f9fa
+		}
+		textarea {
+			border-right: #d6dbdf 1px solid; padding-right: 0px; border-top: #d6dbdf 1px solid; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; border-left: #d6dbdf 1px solid; padding-top: 0px; border-bottom: #d6dbdf 1px solid
+		}
+		.code_header {
+			border-right: #000 1px dashed; padding-right: 4px; border-top: #000 1px dashed; padding-left: 4px; font-weight: bold; background: #fff; padding-bottom: 4px; margin: 8px auto 0px; border-left: #000 1px dashed; color: #000; padding-top: 4px; border-bottom: #000 0px dashed;
+			border-top-width: 0px; border-left-width: 0px; background: none transparent scroll repeat 0% 0%; border-bottom-width: 0px; direction: ltr; text-align: left; border-right-width: 0px
+		}
+		.code_body {
+			border-right: #000 1px dashed; padding-right: 4px; border-top: #000 0px dashed; padding-left: 4px; background: #fff; padding-bottom: 4px; margin: 0px auto 8px; border-left: #000 1px dashed; color: #000; padding-top: 4px; border-bottom: #000 1px dashed; font-family: monospace;
+			border-right: #ddd 1px solid; border-top: #000 1px solid; background: none transparent scroll repeat 0% 0%; border-left: #000 1px solid; direction: ltr; border-bottom: #ddd 1px solid; text-align: left
+		}
+		.post table {
+			padding: 5px; width: 100%; border-spacing: 0px 0px; border-collapse: collapse; border-bottom: solid 1px #b6c0c3; border-right: solid 1px #b6c0c3; background-color: #ffffff
+		}
+		.post th {
+			background-color: #d6dbdf
+		}
+		.post td, .post th {
+			border-top: solid 1px #b6c0c3; border-left: solid 1px #b6c0c3
+		}
+	</style>
+	<post><title>[title]</title>
+</head>
+<body>
+	<table border="0" width="95%" cellspacing="0" cellpadding="3">
+		<tr>
+			<td bgcolor="#f6f3e0" style="color:#5b5743">نوشته شده توسط <b><author><a href="mailto:[email]" title="پست الکترونيک">[name]</a></author></b> در <b>[date]</b> ساعت <b>[time]</b></td>
+		</tr>
+		<tr>
+			<td bgcolor="#fefff3">
+				<span class="post">[content]</span>
+			</td>
+		</tr>
+		</post><tr>
+			<td align="center">اين مطلب از سايت <a href="[site url]">[site title]</a> دانلود شده است.</td>
+		</tr>
+	</table>
+</body>
+</html>]]></item>
+		<item name="linkbox"><![CDATA[<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=[site charset]" />
+	<meta http-equiv="content-language" content="fa">
+	<title>جعبه لينک [site title]</title>
+	<script language="javascript">
+	function highlight(elemnt) {
+		document.getElementById(elemnt).select();
+		document.getElementById(elemnt).focus();
+		if (document.all) {
+			textRange = document.getElementById(elemnt).createTextRange();
+			textRange.execCommand("RemoveFormat");
+			textRange.execCommand("Copy");
+			alert(".کد در حافظه موقت سيستم شما ذخيره شد");
+		}
+	}
+	</script>
+	<style type=text/css>
+		body {
+			scrollbar-face-color: #739cbd;
+			scrollbar-highlight-color: #ffffff;
+			scrollbar-shadow-color: #1f1f1f;
+			scrollbar-3dlight-color: #739cbd;
+			scrollbar-arrow-color: #ffffff;
+			scrollbar-track-color: #cee6f2;
+			scrollbar-darkshadow-color: #ffffff
+		}
+		p, html, table, body{
+			font: 11px tahoma; color: #000099; text-decoration: none; margin: 0px; line-height: 150%
+		}
+		.collapsed {
+			display: none
+		}
+		a: hover {
+			color: #800000
+		}
+		.poolbutton, .mailinput, mailbtn, .searchbox, .searchbtn {
+			font: 11px tahoma
+		}
+		.topicalarchive{
+			font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; font-family: tahoma; color: #000066; text-decoration: none; line-height: 150%; margin: 0px
+		}
+		.cpgtable{
+			margin: 0px; border-collapse: collapse; border-width: 0px; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; font-family: tahoma; color: #000066; text-decoration: none; line-height: 150%
+		}
+		a {
+			font: 11px tahoma; color: #000099; text-decoration: none
+		}
+		input {
+			size: 15; font-family: tahoma; font-size: 8pt; border: 1px solid #999999; background-color: #f8f8f8
+		}
+	</style>
+</head>
+<body bgcolor="#f5f5f5" style="color: #000000" link="#ccccff" vlink="#003300" alink="#666699">
+<div style="width: 400; height: 200">
+<table width="100%" align="center" cellpadding="0" cellspacing="0" border="1" height="113" >
+	<tr>
+		<td width="100%" height="19" bgcolor="#c8c8c8" align="right"><b>جعبه لينک [site title]</b></td>
+	</tr>
+	<tr>
+		<td align="right" height="20" bgcolor="#cccccc">
+			<table border="0" width="100%" height="20" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="right" width="100%" height="100%" bgcolor="#dfdfdf">
+						<a onmouseover="window.status='register your link';return true" title="جاي لينک شما خاليه" style="cursor: hand" onmouseout=self.status=''; href="javascript:void(0)" onClick="window.open('[link registration]','newLink','status=yes, scrollbars=yes, width=300, height=290')">ثبت لينک جديد</a>&nbsp;&nbsp;<img src="[site url]/images/linkbox/blue.gif" align="absbottom" border="0">
+						<a title="گروه [site title]" target="_blank" href="[site url]">[site title]</a><img src="[site url]/images/linkbox/link.gif" align="absbottom" border="0">&nbsp;&nbsp;
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="100%" height="17" bgcolor="#f5f5f5" id="add" style="display:none;"><new link>
+<table border="0" width="100%" style="color: #000000">
+	<tr>
+		<td align="right">[name]</td>
+		<td align="right">:نام</td>
+	</tr>
+	<tr>
+		<td align="right">[url]</td>
+		<td align="right">:آدرس</td>
+	</tr>
+	<tr>
+		<td align="right">[description]</td>
+		<td align="right">:شرح</td>
+	</tr>
+	<tr>
+		<td align="right">[email]</td>
+		<td align="right">:پست الکترونيک شما</td>
+	</tr>
+	<tr>
+		<td align="right">[security code field] [security code]</td>
+		<td align="right">:کد امنيتي</td>
+	</tr>
+	<tr>
+		<td align="right">[link value=(پيوند)] [dump value=(پيوند روزانه)] [advertisment value=(تبليغ)]</td>
+		<td align="right">:نوع</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">[submit value=(ارسال)]</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[result]</td>
+	</tr>
+</table></new link>
+		</td>
+	</tr>
+	<link block><tr>
+		<td width="100%" valign="top" height="16" bgcolor="#f5f5f5" align=right dir=rtl><link>
+			<img src="[site url]/images/linkbox/green.gif" border=0><a onmouseover="javascript:window.status='ارسال شده در [date] و ساعت [time]';return true" title="[description]" onmouseout="javascript:self.status='';" href="[url]" target=_blank>[name]([count])</a><br />
+		</link></td>
+	</tr></link block>
+ 	<tr>
+		<counter><td bgcolor="#f5f5f5" align="center" height="16">
+			بازديد امروز: [today]<br />
+			بازديد ديروز: [yesterday]<br />
+			افراد آنلاين: [online]<br />
+			کل بازديد‌ها: [total]<br />
+		</td></counter>
+	</tr>
+	<tr>
+		<td bgcolor=#cccccc align=right height=13 dir=rtl>
+		کد جعبه لينک :
+		<textarea style="border:1px dotted #c8c8c8; padding:0; font-size: 8pt; font-family: tahoma; background-color: #fff9ea" name="code" rows="1" cols="18" class="text" dir="ltr"><script src="[linkbox]" language="javascript" type="text/javascript"></script></textarea>
+		<input type="button" value="کپى کد" onClick="highlight('code')" style="font-family: tahoma; font-size: 8pt">
+</table>
+<span style="color: #000099; text-align: center">اگر مي خواهيد آمار بازديدتان افزايش يابد اين لينکدوني را در سايت خود قرار دهيد</span>
+</div>
+</body>
+</html>]]></item>
+		<item name="logo"><![CDATA[document.write('<a href="[site url]"><img src="[logo url]" border=0 alt="[site description]" title="[site description]" /></a>');]]></item>
+		<item name="newsletter"><![CDATA[<html>
+<head>
+	<title>[post title]</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+	<style>
+		A {
+			font-size: 8pt; font-family: Tahoma; text-decoration: none
+		}
+		A:link {
+			color: #0066CC
+		}
+		A:visited {
+			color: #0066CC
+		}
+		A:hover {
+			color: #009900
+		}
+		body {
+			font-size: 8pt; font-family: tahoma; color: #000000; direction: rtl; text-align: center; scrollbar-face-color: #dee3e7; scrollbar-light-color: #ffffff; scrollbar-shadow-color: #dee3e7; Sscrollbar-3dlight-color: #d1d7dc; scrollbar-arrow-color: #006699; scrollbar-track-color: #efefef; scrollbar-darkshadow-color: #98aab1
+		}
+		code {
+			border-right: #e7e7e7 1px solid; padding-right: 5px; border-top: #e7e7e7 1px solid; padding-left: 5px; font-size: 0.95em; padding-bottom: 3px; border-left: #e7e7e7 1px solid; width: 100%; direction: ltr; padding-top: 2px; border-bottom: #e7e7e7 1px solid; font-family: verdana; background-color: #f8f9fa
+		}
+	</style>
+</head>
+<body>
+<div align="center" dir="rtl">
+<table border="0" width="95%" cellspacing="0" cellpadding="3" style="color: #000000; font-family: Tahoma; font-size: 8pt;">
+	<tr>
+		<td bgcolor="#F6F3E0" style="color:#5B5743">نوشته شده توسط <b>[post author]</b> در <b>[post date]</b> ساعت <b>[post time]</b></td>
+	</tr>
+	<tr>
+		<td bgcolor="#FEFFF3">[post content]</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FEFFF3">براي خواندن کل مطلب بر روي <a href="[post url]">اينجا</a> کليک کنيد .</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>]]></item>
+		<item name="message"><![CDATA[<html>
+<head>
+	<title>[status]</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=[site charset]" />
+	<style>
+		A {
+			font-size: 8pt; font-family: Tahoma; text-decoration: none
+		}
+		A:link {
+			color: #0066CC
+		}
+		A:visited {
+			color: #0066CC
+		}
+		A:hover {
+			color: #009900
+		}
+	</style>
+</head>
+<body scroll="no">
+<div style="left: 30%; position: absolute; top: 40%; text-align: center">
+<table style="border: 1px solid rgb(200, 200, 200)" cellpadding="0" cellspacing="0" width="400">
+	<tbody>
+		<tr>
+			<td align="center" bgcolor="#f9f9f9" height="80">
+				<table cellpadding="0" cellspacing="0" width="300">
+					<tbody>
+						<tr>
+							<td style="font-size: 8pt; font-family: tahoma; color: rgb(85, 85, 85); font-weight: bold" align="center" height="20">[message]</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</body>
+</html>]]></item>
+		<item name="link script"><![CDATA[<iframe marginwidth="1" marginheight="1" height="200" width="400" border="0" frameborder="0" src="[linkbox url]"></iframe>]]></item>
+		<item name="security code"><![CDATA[<img src="[url]" onClick="this.src='[change url]?'+Math.floor(Math.random()*3)" style="cursor: hand; vertical-align: middle" title="تغيير کد امنيتي" />]]></item>
+		<item name="membership message"><![CDATA[<span dir="rtl" style="font-family: tahoma; font-size: 8pt">
+<p>سلام [name] عزيز</p>
+<p>با تشکر از عضويرت در [site title].<br />براي اتمام مراحل عضويت در سايت، شما بايد به لينک زير، براي فعال کردن عضويت بر روي <a href="[security code url]" title="فعال کردن عضويت">اينجا</a> کليک نماييد.</p>
+<p><b>اطلاعات کاربري شما درسايت:</b><br />شناسه کاربري: [username]<br />کلمه عبور: [password]</p>
+</span>]]></item>
+		<item name="htaccess"><![CDATA[<Files "configuration.php">
+	Order Allow,Deny
+	Deny from All
+</Files>
+<IfModule mod_rewrite.c>
+	Options +FollowSymlinks
+	RewriteEngine On
+	DirectoryIndex [PHP SELF]
+	RewriteRule ^post-([0-9]+).html$ ?post=$1
+	RewriteRule ^comment-([0-9]+).html$ ?comment=$1
+	RewriteRule ^download-post-([0-9]+).html$ ?downloadPost=$1
+	RewriteRule ^archive-([0-9]+).html$ ?archive=$1
+	RewriteRule ^category-([0-9]+).html$ ?category=$1
+	RewriteRule ^page-([0-9]+).html$ ?page=$1
+	RewriteRule ^profile-([0-9]+).html$ ?profile=$1
+	RewriteRule ^author-([0-9]+).html$ ?author=$1
+	RewriteRule ^theme-([0-9]+).html$ ?theme=$1
+	RewriteRule ^link-([0-9]+).html$ ?action=redirect&id=$1
+	RewriteRule ^linkRegistration.html$ ?action=linkRegistration
+	RewriteRule ^linkbox.js$ ?action=linkbox
+	RewriteRule ^linkbox.html$ ?linkbox
+	RewriteRule ^(rss|rdf|atom|opml).xml$ ?feed=$1
+	RewriteRule ^(rss|rdf|atom|opml)-post-([0-9]+).xml$ ?feed=$1&id=$2
+	RewriteRule ^rss-comment.xml$ ?feed=comment
+	RewriteRule ^rss-link.xml$ ?feed=linkRSS
+	RewriteRule ^opml-link.xml$ ?feed=linkOPML
+	RewriteRule ^guestbook.html$ ?guestbook
+	RewriteRule ^style.css$ ?action=style
+	RewriteRule ^script.js$ ?action=script
+	RewriteRule ^mainScript.js$ ?action=mainScript
+	RewriteRule ^CPScript.js$ ?action=CPScript
+	RewriteRule ^CP.html$ ?CP
+	RewriteRule ^backup.html$ ?action=backup
+	RewriteRule ^logIn.html$ ?login
+	RewriteRule ^logOut.html$ ?action=logOut
+	RewriteRule ^deleteAccount.html$ ?action=deleteAccount
+	RewriteRule ^contact.html$ ?contact
+	RewriteRule ^contact-([0-9]+).html$ ?contact=$1
+	RewriteRule ^membership.html$ ?membership
+	RewriteRule ^memberlist.html$ ?profile=0
+	RewriteRule ^securityCode.png$ ?action=securityCode
+	RewriteRule ^changeSecurityCode.png$ ?action=changeSecurityCode
+	RewriteRule ^logo.js$ ?action=logo
+	RewriteRule ^logo.png$ ?action=logo_image
+	RewriteRule ^emoticon.html$ ?action=emoticon
+	RewriteRule ^poll-result.html$ ?action=poll
+</IfModule>]]></item>
+		<item name="configuration"><![CDATA[<?PHP
+$database_host		=	"[host]";
+$database_username	=	"[username]";
+$database_password	=	"[password]";
+$database_name		=	"[name]";
+$table_prefix		=	"[prefix]";
+?>]]></item>
+		<install><![CDATA[<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Installation...</title>
+<style>
+<!--
+body {
+	background-color: #5D6C71; color: #D9DEDF
+}
+body, input, table {
+	font-family: Tahoma; font-size: 8pt
+}
+.input {
+	font-family: Arial; font-size: 8pt
+}
+.line {
+	border-left-width: 1; border-right-width: 1; border-top: 1px solid #6C7E84; border-bottom-width: 1
+}
+-->
+</style>
+</head>
+<body>
+<form method="post">
+<table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" width="100%" height="100%">
+	<tr>
+		<td align="center">
+			<table border="1" cellspacing="0" style="padding: 7; border-collapse: collapse" bordercolor="#4B585C" width="348" cellpadding="0">
+				<tr>
+					<td bgcolor="#627277" align="center">
+						<table border="0" cellspacing="3" width="90%" bordercolorlight="#4B585C" bordercolordark="#4B585C" bordercolor="#4B585C">
+							<tr>
+								<td style="letter-spacing: 2; font-weight: bold"><span style="color: #FFCC00; font-family: 'Times New Roman'">»</span> <span style="color: #FFCC00; font-family: 'Lucida Sans'; font-size: 6pt; font-weight: 700">Raha CMS</span></td>
+							</tr>
+							<tr>
+								<td dir="rtl" class="line" height="60">
+									<p>از انتخاب شما متشکريم. براي تکميل عمليات نصب اطلاعات لازم در فرم زير را تکميل کنيد. توجه کنيد که پايگاه داده‌هايي که شما مشخص مي‌کنيد بايد از قبل ايجاد شده باشد.
+								</td>
+							</tr>
+							<tr>
+								<td class="line">
+									<table width="100%">
+										<tr>
+											<td dir="rtl">پيکربندي پايگاه داده‌ها</td>
+										</tr>
+										<tr>
+											<td>
+												<table style="font-family: Arial">
+													<tr>
+														<td width="50%" align="left" height="17">Database Host:</td>
+														<td width="50%" height="17"><input type="text" name="dataBaseHost" size="20" class="input" value="localhost"></td></tr>
+													<tr>
+														<td>Database User name:</td>
+														<td><input type="text" name="dataBaseUsername" size="20" class="input"></td>
+													</tr>
+													<tr>
+														<td>Database Password:</td>
+														<td><input type="password" name="dataBasePassword" size="20" class="input"></td>
+													</tr>
+													<tr>
+														<td>Database Name:</td>
+														<td><input type="text" name="dataBaseName" size="20" class="input"></td>
+													</tr>
+													<tr>
+														<td>Table Prefix:</td>
+														<td><input type="text" name="tablePrefix" size="20" class="input"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td class="line">
+									<table width="100%">
+										<tr>
+											<td dir="rtl">پيکربندي مدير</td>
+										</tr>
+										<tr>
+											<td>
+												<table style="font-family: Arial">
+													<tr>
+														<td width="50%" align="left" height="17">User name:</td>
+														<td width="50%" height="17"><input type="text" name="username" size="20" class="input"></td></tr>
+													<tr>
+														<td>Password:</td>
+														<td><input type="password" name="password" size="20" class="input"></td>
+													</tr>
+													<tr>
+														<td>Repassword:</td>
+														<td><input type="password" name="repassword" size="20" class="input"></td>
+													</tr>
+													<tr>
+														<td>Email:</td>
+														<td><input type="text" name="email" size="20" class="input"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td class="line">
+									<table width="100%">
+										<tr>
+											<td dir="rtl">پيکربندي سايت</td>
+										</tr>
+										<tr>
+											<td>
+												<table style="font-family: Arial">
+													<tr>
+														<td width="50%" align="left" height="17">Title:</td>
+														<td width="50%" height="17"><input type="text" name="title" size="22" lang="fa"></td></tr>
+													<tr>
+														<td>Name:</td>
+														<td><input type="text" name="name" size="20" class="input"></td>
+													</tr>
+													<tr>
+														<td>Description:</td>
+														<td><input type="text" name="description" size="22" lang="fa"></td>
+													</tr>
+													<tr>
+														<td>URL:</td>
+														<td><input type="text" name="url" size="20" class="input" value="[url]"></td>
+													</tr>
+													<tr>
+														<td>Path:</td>
+														<td><input type="text" name="path" size="20" class="input" value="[path]"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="28" align="center">
+									<input type="submit" value="شروع نصب" name="install" style="width:280px; font-size: 10px; color: #CCCCCC; font-weight: bold; border: 1px solid #333333; background-color: #414D50">
+								</td>
+							</tr>
+							<tr>
+								<td width="100%" align="left" height="22" class="line">
+									<span style="font-size: 7pt; color:#1D2223">Powered By<a href="https://raha.group" style="text-decoration: none; color: #1D2223">Raha</a></span>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>]]></install>
+	</templates>
+	<plugins>
+		<item type="php" status="1"><![CDATA[/*
+Name: کتابخانه
+URL: https://raha.group
+Description: کتابخانه اطلاعات حفاظت شده سيستم
+Date: 2007-09-25 20:15:50
+Version: 1.0
+Author: مهدي نظارتي زاده
+Author URL: https://raha.group
+*/
+function JavaScript($type) {
+	switch ($type) {
+		case "public":
+			$code = <<<JS
+if (typeof document.getElementById == "undefined")
+	document.getElementById = function(id) {
+		return document.all ? document.all[id] : document.layers[id];
+	}
+if (typeof document.getElementsByTagName == "undefined")
+	document.getElementsByTagName = function(tag) {
+		return (document.all ? document.all : document.layers).tags(tag);
+	}
+if (typeof document.forms == "undefined")
+	document.forms = document.getElementsByTagName("form");
+function Cookie(e, p, d, s) {
+	this.expires = e;
+	this.path = p;
+	this.domain = d;
+	this.secure = s;
+	this.set = function(n, v, e) {
+		if (!e)
+			e = this.expires;
+		document.cookie = n+"="+escape(v)+(e ? ";expires="+new Date(new Date().getTime()+e*1000).toGMTString() : "")+(this.path ? ";path="+this.path : "")+(this.domain ? ";domain="+this.domain : "")+(this.secure ? ";secure"+this.secure : "");
+		return this.get(n) ? true : false;
+	}
+	this.get = function(n) {
+		return new RegExp("(?:; )?"+n+"=([^;]*);?").test(document.cookie) ? unescape(RegExp["$1"]) : null;
+	}
+	this.unset = function(n) {
+		if (this.get(n))
+			document.cookie = n+"=;expires=Thu, 01-Jan-70 00:00:00 GMT"+(this.path ? ";path="+this.path : "")+(this.domain ? ";domain="+this.domain : "");
+	}
+	this.enabled = function() {
+		return document.all ? navigator.cookieEnabled : this.set("temp", "temp");
+	}
+}
+function toggle(m, o, v) {
+	var t = typeof v != "undefined", e = window.document.getElementById(o), r = true;
+	e || typeof o == "object" ? m == 1 ? e.disabled = t ? v : e.disabled == "on" ? "" : "on" : m == 2 ? t ? e.className = v : r = e.className : m == 3 ? e.style.display = t ? v : e.style.display == "none" ? "" : "none" : m == 4 ? eval("T=e.tagName.toLowerCase();T=T=='input'||T=='select'||T=='option'||T=='textarea';t?T?e.value=v:e.innerHTML=v:r=T?e.value:e.innerHTML") : m == 5 ? eval("for(var i=0;i<o.elements.length;i++){var e=o.elements[i];if(e.type=='checkbox'&&!e.disabled)e.checked=v;}") : 0 : r = 0;
+	return r;
+}
+var cookie = new Cookie(configuration(cookie->expires), "configuration(cookie->path)", "configuration(cookie->domain)", configuration(cookie->secure));
+JS;
+			break;
+		case "link":
+			$code = <<<JS
+var linkRow = 0, linkElement = [['text', 'name', {size : 20, lang : 'fa'}], ['text', 'url', {size : 20, dir : 'ltr', value : 'http://'}], ['textarea', 'description', [20, 'auto'], {lang : 'fa'}], ['text', 'count', {size : 3}], ['text', 'view', {size : 3}], ['text', 'creator', {size : 10, dir : 'ltr'}], ['text', 'date', {size : 15, dir : 'ltr'}], ['select', 'type', [['پيوند', 0], ['روزانه', 1], ['تبليغ', 2]]], ['select', 'status', [['فعال', 1], ['غير فعال', 0], ['حذف', 2]], {disabled : 1}]];
+function link(list) {
+	data = '<form method=post ajax><input type=hidden name=do value=links><table id=links><tr><td>نام</td><td>آدرس</td><td>شرح</td><td>کليک</td><td>نمايش</td><td>ثبت کننده</td><td>تاريخ ثبت</td><td>نوع</td><td>وضعيت</td></tr>';
+	for (i=1; i<list.length; i++)
+		data += '<tr><td><input class=input name="name'+list[i][0]+'" value="'+list[i][1]+'" size="20" lang=fa></td><td><input class=input name="url'+list[i][0]+'" value="'+list[i][2]+'" size="20" dir=ltr></td><td><textarea class=textarea style="overflow: hidden" onfocus="rows=3" onblur="rows=1" cols="20" rows="1" name="description'+list[i][0]+'" lang=fa>'+list[i][3]+'</textarea></td><td><input class=input name="count'+list[i][0]+'" value="'+list[i][4]+'" size="3" dir=ltr></td><td><input class=input name="view'+list[i][0]+'" value="'+list[i][5]+'" size="3" dir=ltr></td><td><input class=input name="creator'+list[i][0]+'" value="'+list[i][6]+'" size="10" dir=ltr></td><td><input class=input name="date'+list[i][0]+'" value="'+list[i][7]+'" size="15" dir=ltr></td><td><select name="type'+list[i][0]+'" class=select><option value=0'+(list[i][8] == 0 ? " selected" : "")+'>پيوند</option><option value=1'+(list[i][8] == 1 ? " selected" : "")+'>روزانه</option><option value=2'+(list[i][8] == 2 ? " selected" : "")+'>تبليغ</option></select></td><td><select class=input name="status'+list[i][0]+'"><option value=1 '+(list[i][9] == 1 ? "selected" : "")+'>فعال</option><option value=0 '+(list[i][9] == 0 ? "selected" : "")+'>غيرفعال</option><option value=2>حذف</option></select></td></tr>';
+	data += '</table><div align=center><input type=button class=button onclick="if(linkRow>28)this.disabled=true;insertRow(\'links\', linkElement, \'new_[name]\'+linkRow);linkRow++;return false" value="درج رديف"> <input type=submit class=button value="بروزرساني"></div></form>';
+	toggle(4, "CPD", data);
+}
+JS;
+			break;
+		case "AJAX":
+			$code = <<<JS
+function AJAXE() {
+	this.request = false;
+	this.method = "post";
+	this.url = "index.php";
+	this.query = "";
+	this.cache = false;
+	this.headers = new Array();
+	this.node = "";
+	this.nodeValue = "";
+	this.runLoading = true;
+	this.msg = {0 : "شروع نشده ...", 1 : "در حال ارسال اطلاعات ...", 2 : "در حال بررسي شدن اطلاعات ...", 3 : "در حال دريافت اطلاعات ...", 404 : "پيدا نشدن پرونده ...", 500 : "خطاي داخلي در سرور ...", unknow : "عمل قبلي شما کامل اجرا نشد، لطفا اتصال خود را چک کنيد و دوباره تلاش کنيد ...", support : "!مرورگر شما ايژاکس را پشتيباني نمي کند", offline : ".ارتباط شما با سرور قطع است", bug : "!ايژاکس به اشکال بر خورده است"};
+	this.failed = false;
+	this.init = function() {
+		var XmlHttpReq, msxmlhttp = new Array("Msxml2.XMLHTTP.5.0", "Msxml2.XMLHTTP.4.0", "Msxml2.XMLHTTP.3.0", "Msxml2.XMLHTTP", "Microsoft.XMLHTTP");
+		if (typeof window.ActiveXObject != "undefined")
+			for (var i=0; i<msxmlhttp.length; i++)
+				try {
+					XmlHttpReq = new ActiveXObject(msxmlhttp[i]);
+				} catch (e) {
+					XmlHttpReq = null;
+				}
+		else if (typeof window.XMLHttpRequest != "undefined") {
+			XmlHttpReq = new XMLHttpRequest();
+			if (XmlHttpReq.overrideMimeType)
+				XmlHttpReq.overrideMimeType("text/xml");
+		} else
+			this.failed = true;
+		this.request = XmlHttpReq;
+	}
+	this.queries = function(a) {
+		var q = "";
+		for (var k in a)
+			q += k+"="+encodeURIComponent(a[k])+"&";
+		this.query = q.slice(0, q.length-1);
+	}
+	this.setHeader = function(n, v) {
+		this.headers.push(new Array(n, v));
+	}
+	this.sendHeaders = function() {
+		for (var i=0; i<this.headers.length; i++)
+			this.request.setRequestHeader(this.headers[i][0], this.headers[i][1]);
+	}
+	this.onUninitialized = function() {
+		this.nodeValue = this.msg[0];
+	}
+	this.onLoading = function() {
+		this.nodeValue = this.msg[1];
+	}
+	this.onLoaded = function() {
+		this.nodeValue = this.msg[2];
+	}
+	this.onInteractive = function() {
+		this.nodeValue = this.msg[3];
+	}
+	this.onCompletion = function() {
+		this.nodeValue = this.getScript(this.response["Text"]);
+	}
+	this.onError = function() {
+		switch (this.request.status) {
+			case 404 :
+				this.nodeValue = this.msg[404];
+				break;
+			case 500 :
+				this.nodeValue = this.msg[500];
+			default :
+				this.nodeValue = this.msg["unknow"];
+		}
+	}
+	this.onFail = function() {
+		alert(this.msg["support"]);
+	}
+	this.run = function() {
+		var self = this, rnd = (this.url.indexOf("?") == -1 ? "?" : "&")+(this.cache ? "" : "rnd="+new Date().getTime()+"&");
+		if (this.failed) {
+			this.onFail();
+			return false;
+		}
+		if (!window.navigator.onLine) {
+			alert(this.msg["offline"]);
+			return false;
+		}
+		if (this.method.toLowerCase() == "get")
+			this.request.open("GET", this.url+rnd+this.query, true);
+		else {
+			this.request.open("POST", this.url+rnd, true);
+			this.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		}
+		if (!this.cache)
+			this.setHeader("Cache-Control", "no-cache");
+		this.sendHeaders();
+		if (this.runLoading)
+			self.loading(1);
+		this.request.onreadystatechange = function(async) {
+			switch (self.request.readyState) {
+				case 0 :
+					self.onUninitialized();
+					break;
+				case 1:
+					self.onLoading();
+					break;
+				case 2:
+					self.onLoaded();
+					break;
+				case 3:
+					self.onInteractive();
+					break;
+				case 4:
+					if (self.runLoading)
+						self.loading(0);
+					self.response = {Text : self.request.responseText, XML : self.request.responseXML};
+					self.responseStatus = new Array(Math.floor(self.request.status), self.request.statusText);
+					self.responseStatus[0] == 200 ? self.onCompletion() : self.onError();
+					delete self.request;
+			}
+			toggle(4, self.node, self.nodeValue);
+		}
+		this.request.send(this.method.toLowerCase() == "get" ? null : this.query);
+	}
+	this.abort = function() {
+		this.request.abort();
+	}
+	this.loading = function(s) {
+		LoadingOnStatus(0);
+		LoadingOnStatus(s);
+	}
+	this.getScript = function(s) {
+		s = s.split("#JS");
+		if (s[1] != null && s[0] != null) {
+			setJS = document.createElement("script");
+			setJS.setAttribute("type", "text/javascript");
+			document.getElementsByTagName("head")[0].appendChild(setJS);
+			setTimeout(setJS.text = s[0], 100);
+			//setJS.text = "try{eval(s[0]);}catch(e){alert(e.fileName+' : '+e.lineNumber+'\\n'+e.name+' : '+e.message+'\\r\\n'+e.stack);}s[0]='';";
+		}
+		return s[1] != null ? s[1] : s[0];
+	}
+	this.init();
+}
+function LoadingOnStatus(Stats) {
+	if (!Stats) {
+		try {
+			clearTimeout(TimeStatusLoading);
+		} catch (e) {;}
+		window.status = "Done";
+		toggle(3, "loading", "none");
+		return;
+	}
+	Stats = !(Stats%5) ? 1 : Stats%5;
+	window.status = "Loading "+(Stats == 1 ? "-" : Stats == 2 ? "\\\" : Stats == 3 ? "|" : Stats == 4 ? "/" : "...");
+	Stats++;
+	toggle(3, "loading", "");
+	TimeStatusLoading = setTimeout("LoadingOnStatus("+Stats+")", 250);
+}
+function sendXMLHttpRequest(q, m, n, c, p) {
+	try {
+		var r = new AJAXE();
+		r.method = m;
+		r.url = typeof p != "undefined" && p != null && p != "" ? p : "index.php";
+		r.query = q;
+		r.cache = typeof c != "undefined" && c != "" ? c : true;
+		r.node = n;
+		r.run();
+	} catch (e) {
+		alert("Unable to get XML data:\\n"+(typeof e == "string" ? e : e.message ? "["+e.name+"] "+e.message : "Unknown Error"));
+	}
+	return false;
+}
+function request(q, n, c, p) {
+	return sendXMLHttpRequest(q, "post", n, c, p);
+}
+function ADI(q, n, c, m) {
+	if (confirm(c))
+		sendXMLHttpRequest(q, m ? m : "POST", n, false);
+	return false;
+}
+function SAJAXF(o) {
+	var i=0, q = "";
+	for (; i<o.length; i++) {
+		var T = o[i], n = T.name ? T.name : T.id, t = T.type, v = t == "checkbox" ? T.checked ? 1 : 0 : t == "radio" ? T.checked ? T.value : null : T.value
+		if (typeof n != "undefined" && n != "" && v != null && !T.disabled)
+			q += "&"+n+"="+encodeURIComponent(v);
+	}
+	return sendXMLHttpRequest(q.slice(1), o.getAttribute("method"), o.getAttribute("ajax") ? o.getAttribute("ajax") : "result", false, o.getAttribute("action"));
+}
+window.setInterval(function () {var i=0, f = document.forms; for (; i<f.length; i++) if (typeof f[i].getAttribute("ajax") != "undefined" && !f[i].getAttribute("onsubmit")) f[i].onsubmit = new Function("return SAJAXF(this)");}, 500);
+JS;
+			break;
+		case "insert code":
+			$code = <<<JS
+function insertCode(tag) {
+	var myField = document.getElementById('content'), tag = ' '+tag+' ';
+	if (document.selection) {
+		myField.focus();
+		sel = document.selection.createRange();
+		sel.text = tag;
+		myField.focus();
+	} else if (myField.selectionStart || myField.selectionStart == '0') {
+		var startPos = myField.selectionStart;
+		var endPos = myField.selectionEnd;
+		var cursorPos = endPos;
+		myField.value = myField.value.substring(0, startPos)+tag+myField.value.substring(endPos, myField.value.length);
+		cursorPos += tag.length;
+		myField.focus();
+		myField.selectionStart = cursorPos;
+		myField.selectionEnd = cursorPos;
+	} else {
+		myField.value += tag;
+		myField.focus();
+	}
+}
+JS;
+			break;
+		case "CP":
+			$code = <<<JS
+function insertRow(Table, Elements, name, l) {
+	var data = '', table = document.getElementById(Table), lastRow = table.rows.length;
+	if (typeof l != "undefined")
+		lastRow += l;
+	var row = table.insertRow(lastRow);
+	for (i=0; i<Elements.length; i++) {
+		switch (Elements[i][0]) {
+			case "text":
+				el = document.createElement('input');
+				el.setAttribute('type', 'txt');
+				el.setAttribute('size', Elements[i][2]);
+				el.setAttribute('className', 'input');
+				break;
+			case "checkbox":
+				el = document.createElement('input');
+				el.setAttribute('type', 'checkbox');
+				el.setAttribute('className', 'checkbox');
+				break;
+			case "select":
+				el = document.createElement('select');
+				for (j=0; j<Elements[i][2].length; j++) {
+					el.options[j] = new Option(Elements[i][2][j][0], Elements[i][2][j][1]);
+					if (typeof(Elements[i][2][j][2]) != 'undefined')
+						for (n=0; n<Elements[i][2][j][2].length; n++)
+							el.options[j].setAttribute(Elements[i][2][j][2][n][0], Elements[i][2][j][2][n][0]);
+				}
+				el.setAttribute('className', 'select');
+				break;
+			case "textarea":
+				el = document.createElement('textarea');
+				el.setAttribute('cols', Elements[i][2][0]);
+				el.setAttribute('rows', ((Elements[i][2][1] == 'auto') ? 1 : Elements[i][2][1]));
+				if (Elements[i][2][1] == 'auto') {
+					el.setAttribute('onblur', 'this.rows=1');
+					el.setAttribute('onfocus', 'this.rows=3');
+					el.style.overflow = 'hidden';
+				}
+				el.setAttribute('className', 'textarea');
+				break;
+			default:
+				el.innerHTML = eval(Elements[i]);
+		}
+		parameters = (Elements[i][0] == 'text' || Elements[i][0] == 'checkbox') ? Elements[i][2] : Elements[i][3];
+		if (typeof(parameters) != 'undefined')
+			for (var parameter in parameters)
+				el.setAttribute(parameter, parameters[parameter]);
+		el.setAttribute('name', name.replace('[name]', Elements[i][1]));
+		row.insertCell(i).appendChild(el);
+	}
+	return false;
+}
+function TOBJ(c) {
+	document.getElementById("CPO").innerHTML = c;
+	return document.getElementById("CPO");
+}
+function Confirm(m, t, a) {
+	ht = document.getElementsByTagName("html");
+	ht[0].style.filter = "progid:DXImageTransform.Microsoft.BasicImage(grayscale=1)";
+	r = confirm(m) ? true : false;
+	ht[0].style.filter = "";
+	if (r && typeof t != "undefined")
+		switch (t) {
+			case "location" :
+				document.location.href = a;
+				break;
+			default:
+				eval(a);
+		}
+	return r;
+}
+function load(q, n, c, p) {
+	return sendXMLHttpRequest(q, "get", n ? n : CP.cfg.content, c, p);
+}
+var CP = new ControlPanel(Menu), PM = new privateMessage();
+window.setTimeout("CP.tab();", 500);
+JS;
+			break;
+		case "message":
+			$code = <<<JS
+function privateMessage() {
+	this.data = new Array();
+	this.compose = function(m, i, T, t, s, c) {
+		toggle(4, i == "" ? CP.cfg.content : i, '<form method=post ajax'+(i != '' ? "="+i : "")+'><input type=hidden name=do value=PM /><input type=hidden name=action value='+(m != -1 && m != 3 ? 'send' : 'update')+' /><input type=hidden name=id value='+i+' />'+(m > 0 ? '<input type=hidden name=type value='+m+' /><input type=hidden name=to value='+T+' />' : '')+'<table border=0 cellspacing=0 cellpadding=3><tr><td>به:</td><td><table brder=0><tr><td><input name='+(m != 1 ? "to" : '""')+' dir=ltr class=input size=20 value="'+t+'" maxlength=30'+(m > 0 ? ' readonly' : '')+' /></td><td>'+(m < 2 ? " <input type=checkbox name=draft id=draft /><label for=draft>ذخيره در پيش نويس</labe>" : "")+'</td></tr></table></td></tr><tr><td>عنوان:</td><td><input class=input name=subject size=70 lang=fa value="'+s+'" maxlength=120'+(m > 0 ? ' readonly' : '')+' /></td></tr><tr><td>پيام:</td><td><textarea class=input rows=10 cols=70 name=content '+(configuration(message->html) == 1 ? "editor=active" : "lang=fa")+'>'+c+'</textarea></td></tr><tr align=center><td colspan=2><input type=submit class=input value="'+(m == 0 ? "ارسال" : m != -1 || m == 2 ? "پاسخ" : "ويرايش")+'" /></td></tr></table></form>');
+		return false;
+	}
+	this.get = function(a) {
+		var self = this, r = new AJAXE();
+		r.query = "do=PM&action="+a;
+		r.onCompletion = function() {
+			self.data = eval(r.response["Text"]);
+			toggle(4, CP.cfg.content, self.item(a, self.data));
+		}
+		r.run();
+	}
+	this.item = function(t, l) {
+		var i, c = "";
+		if (t == "inbox" || t == "save" || t == "trash")
+			for (i=0; i<l.length; i++)
+				c += CP.item(l[i][0], (l[i][1] == 0 ? "<span class=arrow>» </span>" : "")+l[i][7]+' - مؤلف '+(l[i][3][0] != 0 ? '<a href="profile-'+l[i][3][0]+'.html" target=_blank>'+l[i][3][1]+'</a>' : '<a href="'+(l[i][11] != "" ? l[i][11] : "mailto:"+l[i][10])+'"'+(l[i][11] != "" ? ' title="'+l[i][10]+'"' : "")+' target=_blank>'+l[i][9]+'</a>')+' - '+l[i][5]+' در '+l[i][6]+' - [<a href="#" onclick="return PM.show('+l[i][0]+', \''+t+'\', '+l[i][1]+')">نمايش</a>]'+(t == "inbox" ? '[<a href="#" onclick="return PM.remove('+l[i][0]+', 2)">ذخيره</a>]' : t == "trash" ? '[<a href="#" onclick="return PM.remove('+l[i][0]+', 1)">بازگرداني</a>]' : "")+'[<a href="#" onclick="return PM.remove('+l[i][0]+', 3, \''+t+'\')">حذف</a>]');
+		else if (t == "sent" || t == "outbox")
+			for (i=0; i<l.length; i++)
+				c += CP.item(l[i][0], l[i][7]+' - به <a href="profile-'+l[i][4][0]+'.html" target=_blank>'+l[i][4][1]+'</a> - '+l[i][5]+' در '+l[i][6]+' - [<a href="#" onclick="return PM.show('+l[i][0]+', \''+t+'\')">نمايش</a>]'+(t == "sent" ? '[<a href="#" onclick="return PM.remove('+l[i][0]+', 0)">ارسال مجدد</a>]' : '')+'[<a href="#" onclick="return PM.del('+l[i][0]+')">حذف</a>]');
+		else
+			for (i=0; i<l.length; i++)
+				c += CP.item(l[i][0], l[i][7]+' - به <a href="profile-'+l[i][4][0]+'.html" target=_blank>'+l[i][4][1]+'</a> - '+l[i][5]+' در '+l[i][6]+' - [<a href="#" onclick="return PM.show('+l[i][0]+', \'draft\')">ويرايش</a>][<a href="#" onclick="return PM.del('+l[i][0]+')">حذف</a>]');
+		return c;
+	}
+	this.show = function(i, t, o) {
+		var s = this, r = new AJAXE(), d = this.data, k;
+		r.query = "do=PM&action=show&id="+i+"&source="+(t == "draft" || t == "outbox" ? 1 : 0)+"&old="+(typeof o == "undefined" ? 1 : o);
+		r.onCompletion = function() {
+			for (k=0; k<d.length; k++)
+				if (d[k][0] == i)
+					break;
+			d[k][8] = r.response["Text"];
+			t == "draft" ? s.compose(-1, i, d[k][4][0], d[k][4][1], d[k][7], d[k][8]) : toggle(4, i, '<div style="text-align: right">'+(t == "inbox" || t == "save" || t == "trash" ? 'شما در تاريخ <span style="color: #0000FF">'+d[k][5]+'</span> در <span style="color: #0000FF">'+d[k][6]+'</span> پيامي دريافت نموده ايد، که به شرح زير مي باشد.<br />[<a href=# onclick="return PM.compose('+(PM.data[k][3][0] == 0 ? 2 : 1)+', '+i+', '+(PM.data[k][3][0] == 0 ? 'PM.data['+k+'][10]' : 'PM.data['+k+'][3][0]')+', '+(PM.data[k][3][0] == 0 ? 'PM.data['+k+'][10]' : 'PM.data['+k+'][3][1]')+', PM.data['+k+'][7], \'\')">پاسخ</a>]'+(t == "inbox" ? '[<a href=# onclick="return PM.remove('+i+', 2)">ذخيره</a>]' : t == "trash" ? '[<a href=# onclick="return PM.remove('+i+', 1)">بازگرداني</a>]' : "")+'[<a href=# onclick="return PM.remove('+i+', 3, \''+t+'\')">حذف</a>]<table border=0 cellspacing=5 cellpadding=5 width=90% dir=rtl><tr><td height=24>موضوع:</td><td height=24>'+d[k][7]+'</a></td></tr><tr><td width=20% height=30>مؤلف:</td><td width=80%><a href="'+(d[k][11] != "" ? d[k][11]+'" title="'+d[k][10]+'"' : "mailto:"+d[k][10])+'">'+d[k][9]+'</a></td></tr><tr><td height=30>پيام:</td><td>'+d[k][8]+'</td></tr><tr></tr></table>' : 'شما در تاريخ <span style="color: #0000FF">'+d[k][5]+'</span> در <span style="color: #0000FF">'+d[k][6]+'</span> پيامي ارسال نموده ايد، که به شرح زير مي باشد.<br />'+(t != "outbox" ? '[<a href=# onclick="return PM.remove('+i+', 0)">ارسال مجدد</a>]' : '[<a href=# onclick="return PM.compose(3, '+i+', PM.data['+k+'][4][0], PM.data['+k+'][4][1], PM.data['+k+'][7], PM.data['+k+'][8])">ويرايش</a>]')+'[<a href=# onclick="return PM.del('+i+')">حذف</a>]<table border=0 cellspacing=5 cellpadding=5 width=90% dir=rtl><tr><td height=24>موضوع:</td><td height="24">'+d[k][7]+'</a></td></tr><tr><td width=20% height=30>به:</td><td width=80%>'+d[k][4][1]+'</td></tr></tr><tr><td height=30>پيام:</td><td>'+d[k][8]+'</td></tr><tr></tr></table>')+'</div>');
+		}
+		r.run();
+	}
+	this.remove = function(i, t, s) {
+		return s == "trash" ? this.del(i) : sendXMLHttpRequest("do=PM&action=remove&id="+i+"&type="+t, "post", i);
+	}
+	this.del = function(i) {
+		var k, d = this.data;
+		for (k=0; k<d.length; k++)
+			if (d[k][0] == i)
+				break;
+		if (confirm("آيا مطمئن از حذف پيام "+d[k][7]+" هستيد؟"))
+			return sendXMLHttpRequest("do=PM&action=delete&id="+i, "post", i);
+	}
+}
+var PM = new privateMessage();
+JS;
+	}
+	return $code;
+}
+]]></item>
+		<item type="js" status="1"><![CDATA[/*
+Name: فارسي نويس
+URL: https://raha.group
+Description: پشتيباني زبان فارسي براي فرم‌هاي وب
+Date: 2007-01-01 00:00:00
+Version: 1.0
+Author: مهدي نظارتي زاده
+Author URL: https://raha.group
+*/
+var language = "FA"; 
+var visibleLanguage = false;
+function changeLanguage() {
+	language = (language == "FA") ? "EN" : "FA";
+	curin.focus();
+	document.getElementById("lang").innerHTML = language;
+}
+function focusin() {
+	tag = window.event.srcElement;
+	if (((tag.tagName == "INPUT" && tag.type == "text") || tag.tagName == "TEXTAREA") && tag.lang == "fa") {
+		if (visibleLanguage)
+			lang.outerHTML = "";
+		tag.insertAdjacentHTML("beforebegin", "<span title='F8 => EN or FA\nPowered by: Raha.Group' id='lang' style='background-color:#0066cc; font-size:11; color:#ffffff; position:absolute; margin-left:17; padding-right:1; padding-left:2; padding-bottom:2; font-family: Tahoma; cursor:default;' onClick='changeLanguage();'>"+language+"</span>");
+		curin = tag;
+		lang.style.marginTop = tag.offsetHeight;
+		tag.style.direction = "rtl";
+		visibleLanguage = true;
+	} else {
+		if (visibleLanguage && tag != lang) {
+			lang.outerHTML = "";
+			visibleLanguage = false;
+		}
+	}
+}
+function keyPress() {
+	key = window.event.keyCode;
+	tag = window.event.srcElement;
+	keys = new Array(32, 33, 1563, 1643, 164, 1642, 1548, 1711, 41, 40, 42, 43, 1608, 45, 46, 47, 1776, 1777, 1778, 1779, 1780, 1781, 1782, 1783, 1784, 1785, 58, 1705, 62, 61, 60, 1567, 1644, 1572, 8204, 1688, 1610, 1613, 1573, 1571, 1570, 1617, 1577, 187, 171, 1569, 78, 93, 91, 1618, 1611, 1574, 1615, 1614, 86, 1612, 88, 1616, 1603, 1580, 1688, 1670, 215, 1600, 1662, 1588, 1584, 1586, 1740, 1579, 1576, 1604, 1575, 1607, 1578, 1606, 1605, 1574, 1583, 1582, 1581, 1590, 1602, 1587, 1601, 1593, 1585, 1589, 1591, 1594, 1592, 125, 124, 123, 126);
+	if (key >= 255 && language != "FA" && (tag.lang == "fa" || tag.lang == "FA")) {
+		alert(".لطفا براي استفاده مطلوب زبان سيستم ويندوز را به انگليسي تغيير دهيد\n\nPlease Change Your Windows Language to English");
+		return(false);
+	} else if (key < 32 || key >= 255)
+		return(true);
+	if (key == 32 && window.event.shiftKey)
+		window.event.keyCode = 8204;
+	else if (language == "FA" && (tag.lang == "fa" || tag.lang == "FA"))
+		window.event.keyCode = keys[key-32];
+	return(true);
+}
+function keyDown() {
+	key = window.event.keyCode;
+	if (key == 119 || (key == 16 && window.event.altLeft))
+		changeLanguage();
+}
+document.onkeypress = keyPress;
+document.onfocusin = focusin;
+document.onkeydown = keyDown;]]></item>
+	<item type="js" status="1"><![CDATA[/*
+Name: dTree
+URL: www.destroydrop.com/javascript/tree/
+Description: This script can be used freely as long as all
+Date: 2003-04-17
+Version: 2.05
+Author: Geir Landrِ
+Author Email: drop@destroydrop.com
+Author URL: http://www.destroydrop.com
+*/
+
+// Node object
+function Node(id, pid, name, url, title, target, icon, iconOpen, open) {
+	this.id = id;
+	this.pid = pid;
+	this.name = name;
+	this.url = url;
+	this.title = title;
+	this.target = target;
+	this.icon = icon;
+	this.iconOpen = iconOpen;
+	this._io = open || false;
+	this._is = false;
+	this._ls = false;
+	this._hc = false;
+	this._ai = 0;
+	this._p;
+};
+
+// Tree object
+function dTree(objName) {
+	this.config = {
+		target					: null,
+		folderLinks			: true,
+		useSelection		: true,
+		useCookies			: true,
+		useLines				: true,
+		useIcons				: true,
+		useStatusText		: false,
+		closeSameLevel	: false,
+		inOrder					: false
+	}
+	this.icon = {
+		root				: 'images/tree menu/base.gif',
+		folder			: 'images/tree menu/folder.gif',
+		folderOpen	: 'images/tree menu/folderopen.gif',
+		node				: 'images/tree menu/page.gif',
+		empty				: 'images/tree menu/empty.gif',
+		line				: 'images/tree menu/line.gif',
+		join				: 'images/tree menu/join.gif',
+		joinBottom	: 'images/tree menu/joinbottom.gif',
+		plus				: 'images/tree menu/plus.gif',
+		plusBottom	: 'images/tree menu/plusbottom.gif',
+		minus				: 'images/tree menu/minus.gif',
+		minusBottom	: 'images/tree menu/minusbottom.gif',
+		nlPlus			: 'images/tree menu/nolinesPlus.gif',
+		nlMinus			: 'images/tree menu/nolinesMinus.gif'
+	};
+	this.obj = objName;
+	this.aNodes = [];
+	this.aIndent = [];
+	this.root = new Node(-1);
+	this.selectedNode = null;
+	this.selectedFound = false;
+	this.completed = false;
+};
+
+// Adds a new node to the node array
+dTree.prototype.add = function(id, pid, name, url, title, target, icon, iconOpen, open) {
+	this.aNodes[this.aNodes.length] = new Node(id, pid, name, url, title, target, icon, iconOpen, open);
+};
+
+// Open/close all nodes
+dTree.prototype.openAll = function() {
+	this.oAll(true);
+};
+dTree.prototype.closeAll = function() {
+	this.oAll(false);
+};
+
+// Outputs the tree to the page
+dTree.prototype.toString = function() {
+	var str = '<div class="dtree">';
+	if (document.getElementById) {
+		if (this.config.useCookies) this.selectedNode = this.getSelected();
+		str += this.addNode(this.root);
+	} else str += 'Browser not supported.';
+	str += '</div>';
+	if (!this.selectedFound) this.selectedNode = null;
+	this.completed = true;
+	return str;
+};
+
+// Creates the tree structure
+dTree.prototype.addNode = function(pNode) {
+	var str = '';
+	var n=0;
+	if (this.config.inOrder) n = pNode._ai;
+	for (n; n<this.aNodes.length; n++) {
+		if (this.aNodes[n].pid == pNode.id) {
+			var cn = this.aNodes[n];
+			cn._p = pNode;
+			cn._ai = n;
+			this.setCS(cn);
+			if (!cn.target && this.config.target) cn.target = this.config.target;
+			if (cn._hc && !cn._io && this.config.useCookies) cn._io = this.isOpen(cn.id);
+			if (!this.config.folderLinks && cn._hc) cn.url = null;
+			if (this.config.useSelection && cn.id == this.selectedNode && !this.selectedFound) {
+					cn._is = true;
+					this.selectedNode = n;
+					this.selectedFound = true;
+			}
+			str += this.node(cn, n);
+			if (cn._ls) break;
+		}
+	}
+	return str;
+};
+
+// Creates the node icon, url and text
+dTree.prototype.node = function(node, nodeId) {
+	var str = '<div class="dTreeNode">' + this.indent(node, nodeId);
+	if (this.config.useIcons) {
+		if (!node.icon) node.icon = (this.root.id == node.pid) ? this.icon.root : ((node._hc) ? this.icon.folder : this.icon.node);
+		if (!node.iconOpen) node.iconOpen = (node._hc) ? this.icon.folderOpen : this.icon.node;
+		if (this.root.id == node.pid) {
+			node.icon = this.icon.root;
+			node.iconOpen = this.icon.root;
+		}
+		str += '<img id="i' + this.obj + nodeId + '" src="' + ((node._io) ? node.iconOpen : node.icon) + '" alt="" />';
+	}
+	if (node.url) {
+		str += '<a id="s' + this.obj + nodeId + '" class="' + ((this.config.useSelection) ? ((node._is ? 'nodeSel' : 'node')) : 'node') + '" href="' + node.url + '"';
+		if (node.title) str += ' title="' + node.title + '"';
+		if (node.target) str += ' target="' + node.target + '"';
+		if (this.config.useStatusText) str += ' onmouseover="window.status=\'' + node.name + '\';return true;" onmouseout="window.status=\'\';return true;" ';
+		if (this.config.useSelection && ((node._hc && this.config.folderLinks) || !node._hc))
+			str += ' onclick="javascript: ' + this.obj + '.s(' + nodeId + ');"';
+		str += '>';
+	}
+	else if ((!this.config.folderLinks || !node.url) && node._hc && node.pid != this.root.id)
+		str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');" class="node">';
+	str += node.name;
+	if (node.url || ((!this.config.folderLinks || !node.url) && node._hc)) str += '</a>';
+	str += '</div>';
+	if (node._hc) {
+		str += '<div id="d' + this.obj + nodeId + '" class="clip" style="display:' + ((this.root.id == node.pid || node._io) ? 'block' : 'none') + ';">';
+		str += this.addNode(node);
+		str += '</div>';
+	}
+	this.aIndent.pop();
+	return str;
+};
+
+// Adds the empty and line icons
+dTree.prototype.indent = function(node, nodeId) {
+	var str = '';
+	if (this.root.id != node.pid) {
+		for (var n=0; n<this.aIndent.length; n++)
+			str += '<img src="' + ( (this.aIndent[n] == 1 && this.config.useLines) ? this.icon.line : this.icon.empty ) + '" alt="" />';
+		(node._ls) ? this.aIndent.push(0) : this.aIndent.push(1);
+		if (node._hc) {
+			str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');"><img id="j' + this.obj + nodeId + '" src="';
+			if (!this.config.useLines) str += (node._io) ? this.icon.nlMinus : this.icon.nlPlus;
+			else str += ( (node._io) ? ((node._ls && this.config.useLines) ? this.icon.minusBottom : this.icon.minus) : ((node._ls && this.config.useLines) ? this.icon.plusBottom : this.icon.plus ) );
+			str += '" alt="" /></a>';
+		} else str += '<img src="' + ( (this.config.useLines) ? ((node._ls) ? this.icon.joinBottom : this.icon.join ) : this.icon.empty) + '" alt="" />';
+	}
+	return str;
+};
+
+// Checks if a node has any children and if it is the last sibling
+dTree.prototype.setCS = function(node) {
+	var lastId;
+	for (var n=0; n<this.aNodes.length; n++) {
+		if (this.aNodes[n].pid == node.id) node._hc = true;
+		if (this.aNodes[n].pid == node.pid) lastId = this.aNodes[n].id;
+	}
+	if (lastId==node.id) node._ls = true;
+};
+
+// Returns the selected node
+dTree.prototype.getSelected = function() {
+	var sn = this.getCookie('cs' + this.obj);
+	return (sn) ? sn : null;
+};
+
+// Highlights the selected node
+dTree.prototype.s = function(id) {
+	if (!this.config.useSelection) return;
+	var cn = this.aNodes[id];
+	if (cn._hc && !this.config.folderLinks) return;
+	if (this.selectedNode != id) {
+		if (this.selectedNode || this.selectedNode==0) {
+			eOld = document.getElementById("s" + this.obj + this.selectedNode);
+			eOld.className = "node";
+		}
+		eNew = document.getElementById("s" + this.obj + id);
+		eNew.className = "nodeSel";
+		this.selectedNode = id;
+		if (this.config.useCookies) this.setCookie('cs' + this.obj, cn.id);
+	}
+};
+
+// Toggle Open or close
+dTree.prototype.o = function(id) {
+	var cn = this.aNodes[id];
+	this.nodeStatus(!cn._io, id, cn._ls);
+	cn._io = !cn._io;
+	if (this.config.closeSameLevel) this.closeLevel(cn);
+	if (this.config.useCookies) this.updateCookie();
+};
+
+// Open or close all nodes
+dTree.prototype.oAll = function(status) {
+	for (var n=0; n<this.aNodes.length; n++) {
+		if (this.aNodes[n]._hc && this.aNodes[n].pid != this.root.id) {
+			this.nodeStatus(status, n, this.aNodes[n]._ls)
+			this.aNodes[n]._io = status;
+		}
+	}
+	if (this.config.useCookies) this.updateCookie();
+};
+
+// Opens the tree to a specific node
+dTree.prototype.openTo = function(nId, bSelect, bFirst) {
+	if (!bFirst) {
+		for (var n=0; n<this.aNodes.length; n++) {
+			if (this.aNodes[n].id == nId) {
+				nId=n;
+				break;
+			}
+		}
+	}
+	var cn=this.aNodes[nId];
+	if (cn.pid==this.root.id || !cn._p) return;
+	cn._io = true;
+	cn._is = bSelect;
+	if (this.completed && cn._hc) this.nodeStatus(true, cn._ai, cn._ls);
+	if (this.completed && bSelect) this.s(cn._ai);
+	else if (bSelect) this._sn=cn._ai;
+	this.openTo(cn._p._ai, false, true);
+};
+
+// Closes all nodes on the same level as certain node
+dTree.prototype.closeLevel = function(node) {
+	for (var n=0; n<this.aNodes.length; n++) {
+		if (this.aNodes[n].pid == node.pid && this.aNodes[n].id != node.id && this.aNodes[n]._hc) {
+			this.nodeStatus(false, n, this.aNodes[n]._ls);
+			this.aNodes[n]._io = false;
+			this.closeAllChildren(this.aNodes[n]);
+		}
+	}
+}
+
+// Closes all children of a node
+dTree.prototype.closeAllChildren = function(node) {
+	for (var n=0; n<this.aNodes.length; n++) {
+		if (this.aNodes[n].pid == node.id && this.aNodes[n]._hc) {
+			if (this.aNodes[n]._io) this.nodeStatus(false, n, this.aNodes[n]._ls);
+			this.aNodes[n]._io = false;
+			this.closeAllChildren(this.aNodes[n]);		
+		}
+	}
+}
+
+// Change the status of a node(open or closed)
+dTree.prototype.nodeStatus = function(status, id, bottom) {
+	eDiv	= document.getElementById('d' + this.obj + id);
+	eJoin	= document.getElementById('j' + this.obj + id);
+	if (this.config.useIcons) {
+		eIcon	= document.getElementById('i' + this.obj + id);
+		eIcon.src = (status) ? this.aNodes[id].iconOpen : this.aNodes[id].icon;
+	}
+	eJoin.src = (this.config.useLines)?
+	((status)?((bottom)?this.icon.minusBottom:this.icon.minus):((bottom)?this.icon.plusBottom:this.icon.plus)):
+	((status)?this.icon.nlMinus:this.icon.nlPlus);
+	eDiv.style.display = (status) ? 'block': 'none';
+};
+
+
+// [Cookie] Clears a cookie
+dTree.prototype.clearCookie = function() {
+	var now = new Date();
+	var yesterday = new Date(now.getTime() - 1000 * 60 * 60 * 24);
+	this.setCookie('co'+this.obj, 'cookieValue', yesterday);
+	this.setCookie('cs'+this.obj, 'cookieValue', yesterday);
+};
+
+// [Cookie] Sets value in a cookie
+dTree.prototype.setCookie = function(cookieName, cookieValue, expires, path, domain, secure) {
+	document.cookie =
+		escape(cookieName) + '=' + escape(cookieValue)
+		+ (expires ? '; expires=' + expires.toGMTString() : '')
+		+ (path ? '; path=' + path : '')
+		+ (domain ? '; domain=' + domain : '')
+		+ (secure ? '; secure' : '');
+};
+
+// [Cookie] Gets a value from a cookie
+dTree.prototype.getCookie = function(cookieName) {
+	var cookieValue = '';
+	var posName = document.cookie.indexOf(escape(cookieName) + '=');
+	if (posName != -1) {
+		var posValue = posName + (escape(cookieName) + '=').length;
+		var endPos = document.cookie.indexOf(';', posValue);
+		if (endPos != -1) cookieValue = unescape(document.cookie.substring(posValue, endPos));
+		else cookieValue = unescape(document.cookie.substring(posValue));
+	}
+	return (cookieValue);
+};
+
+// [Cookie] Returns ids of open nodes as a string
+dTree.prototype.updateCookie = function() {
+	var str = '';
+	for (var n=0; n<this.aNodes.length; n++) {
+		if (this.aNodes[n]._io && this.aNodes[n].pid != this.root.id) {
+			if (str) str += '.';
+			str += this.aNodes[n].id;
+		}
+	}
+	this.setCookie('co' + this.obj, str);
+};
+
+// [Cookie] Checks if a node id is in a cookie
+dTree.prototype.isOpen = function(id) {
+	var aOpen = this.getCookie('co' + this.obj).split('.');
+	for (var n=0; n<aOpen.length; n++)
+		if (aOpen[n] == id) return true;
+	return false;
+};
+
+// If Push and pop is not implemented by the browser
+if (!Array.prototype.push) {
+	Array.prototype.push = function array_push() {
+		for(var i=0;i<arguments.length;i++)
+			this[this.length]=arguments[i];
+		return this.length;
+	}
+};
+if (!Array.prototype.pop) {
+	Array.prototype.pop = function array_pop() {
+		lastElement = this[this.length-1];
+		this.length = Math.max(this.length-1,0);
+		return lastElement;
+	}
+};]]></item>
+	</plugins>
+	<smiles>
+		<item code=":)" url="1.gif" description="شاد" state="1" />
+		<item code=":(" url="2.gif" description="غمگين" state="1" />
+		<item code=";)" url="3.gif" description="چشمک زدن" state="1" />
+		<item code=":D" url="4.gif" description="نيش خند" state="1" />
+		<item code=";;)" url="5.gif" description="مژه زدن" state="1" />
+		<item url="6.gif" description="آغوش باز" state="1"><![CDATA[>:D<]]></item>
+		<item code=":-/" url="7.gif" description="گيج شدن" state="1"></item>
+		<item code=":x" url="8.gif" description="دوست داشتن" state="1" />
+		<item code=':">' url="9.gif" description="خجالت کشيدن" state="1" />
+		<item code=":P" url="10.gif" description="زبان درازي" state="1" />
+		<item code=":-*" url="11.gif" description="بوسيدن" state="1" />
+		<item code="=((" url="12.gif" description="شکستن قلب" state="1" />
+		<item code=":-O" url="13.gif" description="متعجب" state="1" />
+		<item code="X(" url="14.gif" description="خشمناک" state="1" />
+		<item code=":>" url="15.gif" description="از خود راضي" state="1" />
+		<item code="B-)" url="16.gif" description="خونسرد" state="1" />
+		<item code=":-S" url="17.gif" description="اضطراب" state="1" />
+		<item code="#:-S" url="18.gif" description="خستگي" state="1" />
+		<item code=">:)" url="19.gif" description="شيطان" state="1" />
+		<item code=":((" url="20.gif" description="گريان" state="1" />
+		<item code=":))" url="21.gif" description="خندان" state="1" />
+		<item code=":|" url="22.gif" description="رک و بي پرده" state="1" />
+		<item code="/:)" url="23.gif" description="حرکت ابرو" state="1" />
+		<item code="=))" url="24.gif" description="غلت زدن بروي زمين" state="1" />
+		<item code="O:-)" url="25.gif" description="فرشته" state="1" />
+		<item code=":-B" url="26.gif" description="دانا" state="1" />
+		<item code="=;" url="27.gif" description="صحبت به همراه دست" state="1" />
+		<item code=":-c" url="101.gif" description="تماس بگير" state="1" />
+		<item code=":)]" url="100.gif" description="پشت تلفن" state="1" />
+		<item code="~X(" url="102.gif" description="آخره بذله گويي" state="1" />
+		<item code=":-h" url="103.gif" description="موج زدن" state="1" />
+		<item code=":-t" url="104.gif" description="بس کنيد" state="1" />
+		<item code="8->" url="105.gif" description="افکار پوچ" state="1" />
+		<item code="I-)" url="28.gif" description="خواب آلود" state="1" />
+		<item code="8-|" url="29.gif" description="حرکت چشم‌ها" state="1" />
+		<item code="L-)" url="30.gif" description="بازنده" state="1" />
+		<item url="31.gif" description="ناخوش" state="1"><![CDATA[:-&]]></item>
+		<item code=":-$" url="32.gif" description="به کسي نگو" state="1" />
+		<item code="[-(" url="33.gif" description="بي صحبت" state="1" />
+		<item code=":O)" url="34.gif" description="مسخره" state="1" />
+		<item code="8-}" url="35.gif" description="نادان" state="1" />
+		<item url="36.gif" description="جشن" state="1"><![CDATA[<:-P]]></item>
+		<item code="(:|" url="37.gif" description="خميازه کشيدن" state="1" />
+		<item code="=P~" url="38.gif" description="آب از دهان ريختن" state="1" />
+		<item code=":-?" url="39.gif" description="فکر کردن" state="1" />
+		<item code="#-o" url="40.gif" description="آآآه" state="1" />
+		<item code="=D>" url="41.gif" description="تحسين" state="1" />
+		<item code=":-SS" url="42.gif" description="ترسيدن" state="1" />
+		<item code="@-)" url="43.gif" description="هيپنوتيزم شده" state="1" />
+		<item code=":^o" url="44.gif" description="دروغگو" state="1" />
+		<item code=":-w" url="45.gif" description="منتظر" state="1" />
+		<item url="46.gif" description="حسرت" state="1"><![CDATA[:-<]]></item>
+		<item code=">:P" url="47.gif" description="زبون درازي" state="1" />
+		<item url="48.gif" description="گاوسوار" state="1"><![CDATA[<):)]]></item>
+		<item code=":o3" url="108.gif" description="چشمهاي سگ" state="0" />
+		<item code=":-??" url="106.gif" description="متوجه نميشم" state="0" />
+		<item code="%-(" url="107.gif" description="نميشنوم" state="0" />
+		<item code=":@)" url="49.gif" description="خوک" state="0" />
+		<item code="3:-O" url="50.gif" description="گاو" state="0" />
+		<item code=":(|)" url="51.gif" description="ميمون" state="0" />
+		<item code="~:>" url="52.gif" description="خروس" state="0" />
+		<item code="@};-" url="53.gif" description="گل رز" state="0" />
+		<item code="%%-" url="54.gif" description="خوش شانس" state="0" />
+		<item code="**==" url="55.gif" description="پرچم" state="0" />
+		<item code="(~~)" url="56.gif" description="کدوتنبل" state="0" />
+		<item code="~O)" url="57.gif" description="قهوه" state="0" />
+		<item code="*-:)" url="58.gif" description="انديشه" state="0" />
+		<item code="8-X" url="59.gif" description="جمجمه" state="0" />
+		<item code="=:)" url="60.gif" description="بيگانه 1 (بطورپنهاني درمحلي ميکروفون نصب کردن)" state="0" />
+		<item code=">-)" url="61.gif" description="بيگانه 2" state="0" />
+		<item code=":-L" url="62.gif" description="بي نتيجه" state="0" />
+		<item url="63.gif" description="دعا کردن" state="0"><![CDATA[[-O<]]></item>
+		<item code="$-)" url="64.gif" description="چشم‌هاي پولي" state="0" />
+		<item code=':-"' url="65.gif" description="سوت زدن" state="0" />
+		<item code="b-(" url="66.gif" description="کتک خوردن" state="0" />
+		<item code=":)>-" url="67.gif" description="آشتي" state="0" />
+		<item code="[-X" url="68.gif" description="خجالت بکش" state="0" />
+		<item code="\\:D/" url="69.gif" description="پاي کوبي" state="0" />
+		<item code=">:/" url="70.gif" description="بيا جلو" state="0" />
+		<item code=";))" url="71.gif" description="ه ه ه" state="0" />
+		<item code=":-@" url="76.gif" description="پر حرف" state="0" />
+		<item code="^:)^" url="77.gif" description="بي لايق" state="0" />
+		<item code=":-j" url="78.gif" description="اوه برو" state="0" />
+		<item code="(*)" url="79.gif" description="ستاره" state="0" />
+		<item code="o->" url="72.gif" description="جنگنده مرد (Hiro)" state="0" />
+		<item code="o=>" url="73.gif" description="جنگنده مرد 2 (Billy)" state="0" />
+		<item code="o-+" url="74.gif" description="جنگنده زن (April)" state="0" />
+		<item code="(%)" url="75.gif" description="نشانه جنگنده ياهو!" state="0" />
+	</smiles>
+	<avatars>
+		<item name="بدون" url="01.png" />
+		<item name="جادوگر" url="02.png" />
+		<item name="نينجا" url="03.png" />
+		<item name="پليس" url="04.png" />
+		<item name="پنگوئن" url="05.png" />
+		<item name="پنگوئن ما قبل تاريخ" url="06.png" />
+		<item name="پنگوئن با سرمايه دار" url="07.gif" />
+		<item name="فايرفوکس و پنگوئن" url="08.png" />
+		<item name="فايرفوکس و کره ي زمين" url="09.png" />
+		<item name="شيطان" url="10.png" />
+		<item name="آدم" url="11.png" />
+	</avatars>
+	<post title="تبريک"><![CDATA[با سلام خدمت کاربران گرامي؛<br />از اينکه اين سيستم را براي سايت خود در نظر گرفته ايد متشکريم.<br />خواهشمنديم در صورت برخورد با هر اشکالي در اين سيستم و يا اگر پيشنهادي در بهتر سازي آن داريد ما را توسط پست الکترونيک زير با خبر فرماييد.<br />براي دانلود پوسته‌هاي فارسي و امکانات اضافي ديگر به سايت زير مراجعه فرماييد.<br />شاد و پيروز باشيد. <br /><br /><center>E-Mail: Support@Raha.Group<br />WebSite: Www.Raha.Group</center>]]></post>
+	<script><![CDATA[session_start();
+$database_host = $_POST["dataBaseHost"];
+$database_username = $_POST["dataBaseUsername"];
+$database_password = $_POST["dataBasePassword"];
+$database_name = $_POST["dataBaseName"];
+$table_prefix = $_POST["tablePrefix"];
+if (isset($_POST["install"]) && ($DB = new database($database_host, $database_username, $database_password, $database_name, $table_prefix)) && $_POST["password"] == $_POST["repassword"]) {
+	foreach ($tree["data"]["sql"]["query"] as $q)
+		$DB->create($q["value"], 1);
+	foreach ($tree["data"]["theme"]["item"] as $item)
+		$Theme[$item["attributes"]["name"]] = $DB->escape($item["value"]);
+	foreach ($tree["data"]["templates"]["item"] as $item)
+		$Template[$item["attributes"]["name"]] = $item["value"];
+	foreach ($tree["data"]["plugins"]["item"] as $item)
+		$DB->insert($DB->plugin, array("source" => $item["value"], "type" => $item[attributes][type], "status" => $item["attributes"]["status"]));
+	$DB->insert($DB->post, array("title" => $tree["data"]["post"]["attributes"]["title"], "content" => $tree["data"]["post"]["value"], "author" => 1, "date" => Now));
+	config("site", array("title" => $_POST["title"], "name" => $_POST["name"], "url" => str_replace("\\", "/", $_POST["url"]), "server path" => $_POST["path"], "description" => $_POST["description"], "keywords" => "", "author" => $_POST["username"], "email" => $_POST["email"], "create date" => date("Y-m-d H:i:s"), "date format" => "l j F Y", "time format" => "g:i A", "time zone" => "+3.5", "theme" => 1, "main page" => "main", "cache" => 0, "charset" => "UTF-8", "excerpt length" => 150));
+	config("post", array("html" => 1, "max ratings" => 5, "order" => "date", "sort" => "desc", "ping status" => 1, "ping service" => "http://rpc.pingomatic.com\nhttp://rpc.weblogs.com\nhttp://ping.blo.gs\nhttp://rpc.technorati.com\nhttp://audiorpc.weblogs.com\nhttp://pinger.blogflux.com", "per page" => 3, "per feed" => 10, "show most last posts" => 10, "archive" => "monthly", "template" => $Template["download post"], "author order" => "id", "author sort" => "asc"));
+	config("comment", array("order" => "time", "sort" => "asc", "html" => 0, "status" => 0, "per feed" => 0));
+	config("category", array("default" => 1, "order" => "id", "sort" => "asc", "default icon" => "main.gif", "icon path" => "images/categories"));
+	config("user", array("membership status" => 0, "membership subject" => "فعال کردن عضويت در [site title]", "membership message" => $Template["membership message"], "membership level" => 3, "avatar dimensions" => "128*152", "avatar size" => 102400, "avatar path" => "images/avatars", "signature length" => 300, "signature html" => 0, "timeout" => 300));
+	foreach ($tree["data"]["avatars"]["item"] as $item)
+		$avatar[$item["attributes"]["name"]] = $item["attributes"]["url"];
+	config("avatar", $avatar);
+	config("message", array("size" => 300, "html" => 0));
+	config("newsletter", array("emails" => "", "status" => 1, "subject" => "بروز شدن سايت [site title] ([post title])", "template" => $Template["newsletter"]));
+	config("guestbook", array("order" => "time", "sort" => "asc", "html" => 0, "status" => 0));
+	config("link", array("order" => "time", "sort" => "asc", "per page" => 50, "per feed" => 0, "status" => 0, "theme" => $Template["linkbox"], "template" => $Template["link script"]));
+	config("security code", array("background color" => "#D9FFC9", "border color" => "#FFFFFF", "foreground color" => "#666666", "line color" => "#8CBEFF", "line number" => 4, "length" => 5, "template" => $Template["security code"]));
+	config("logo", array("background color" => "#898E79", "border color" => "#666666", "foreground color" => "#FFFFFF", "icon content" => $_POST["name"][0], "icon background color" => "#31659C", "icon foreground color" => "#FFFFFF", "line color" => "#FFFFFF", "site name" => $_POST["name"], "template" => $Template["logo"]));
+	config("announcement", array("title" => "", "content" => "", "view" => "", "count" => "", "expires" => ""));
+	config("bad word", array());
+	config("banned ip", array("ip" => array(), "expires" => array(), "infraction" => array()));
+	config("counter", array("today" => 0, "yesterday" => 0, "total" => 0, "update" => 0, "max visit" => "0 0", "max online" => "0 0", "online" => array(), "referrer" => "", "browser" => array("internet explorer" => 0, "fire fox" => 0, "opera" => 0, "net scape" => 0, "gecko" => 0, "other" => 0)));
+	$emoticon["convert"] = 1;
+	$emoticon["path"] = "http://us.i1.yimg.com/us.yimg.com/i/mesg/emoticons7/";
+	foreach ($tree["data"]["smiles"]["item"] as $item) {
+		$emoticon["data"]["code"][] = isset($item["attributes"]["code"]) ? $item["attributes"]["code"] : $item["value"];
+		$emoticon["data"]["url"][] = $item["attributes"]["url"];
+		$emoticon["data"]["description"][] = $item["attributes"]["description"];
+		$emoticon["data"]["state"][] = $item["attributes"]["state"];
+	}
+	config("emoticon", $emoticon);
+	config("tag", array("'<code([^>]*?)>(.*?)</code>'ise" => '\'<div class="code_header">کد:</div><div class="code_body"\'.stripslashes("\1").\'><pre>\'.htmlspecialchars(stripslashes("\2")).\'</pre></div>\'', "'<script[^>]*?>(.*?)</script>'is" => ""));
+	$level["name"][1] = "مدير";
+	$level["access"][1] = array("backup", "site state", "configuration", "emoticon", "announcement", "bad word", "banned ip", "tag", "counter", "link", "import link", "poll", "guestbook", "category", "newsletter", "theme", "plugin", "user", "profile", "user avatar", "level", "comment", "writer", "editor", "import post", "message");
+	$level["name"][2] = "نويسنده";
+	$level["access"][2] = array("writer", "profile", "comment", "message");
+	$level["name"][3] = "عضو";
+	$level["access"][3] = array("profile");
+	$level["name"][4] = "مردم";
+	$level["access"][4] = array("backup", "site state", "emoticon", "announcement", "bad word", "banned ip", "tag", "counter", "link", "import link", "poll", "guestbook", "category", "user", "profile", "user avatar", "level", "comment", "writer", "editor", "import post", "message", "demo");
+	$level["increment"] = 4;
+	config("level", $level);
+	config("template", array("message" => $Template["message"], "coming soon" => $Template["coming soon"], "banned ip" => $Template["banned ip"]));
+	config("cookie", array("expires" => 31536000, "path" => "/", "domain" => "", "secure" => 0));
+	config("smtp", array("status" => 0, "host" => "", "username" => "", "password" => ""));
+	$DB->insert($DB->user, array("username" => $_POST["username"], "password" => md5($_POST["password"]), "email" => $_POST["email"], "registered" => Time));
+	mysql_query("insert into $DB->theme values ('', '$Theme[main]', '$Theme[comment]', '$Theme[post]', '$Theme[contact]', '$Theme[guestbook]', '{$Theme['link registration']}', '$Theme[profile]', '$Theme[membership]', '$Theme[emoticons]', '$Theme[login]', '{$Theme['control panel']}', '$Theme[style]', '$Theme[script]', '{$Theme['php script']}');");
+	$_SESSION = array("logedIn" => 1, "username" => $_POST["username"], "password" => md5($_POST["password"]));
+	$h = fopen(".htaccess", "w");
+	fputs($h, str_replace("[PHP SELF]", $_SERVER["PHP_SELF"], "\n$Template[htaccess]"));
+	fclose($h);
+	$h = fopen("configuration.php", "w");
+	fwrite($h, strtr($Template["configuration"], array("[host]" => $database_host, "[username]" => $database_username, "[password]" => $database_password, "[name]" => $database_name, "[prefix]" => $table_prefix)));
+	fclose($h);
+	chmod("configuration.php", 0666);
+	unlink("data.xml");
+} else {
+	$schema = isset($_SERVER["HTTPS"]) && strtolower($_SERVER["HTTPS"]) == "on" ? "https://" : "http://";
+	$port = $_SERVER["SERVER_PORT"] == 80 ? "" : ":$_SERVER[SERVER_PORT]";
+	die("<script>".$tree["data"]["plugins"]["item"][1]["value"]."</script>".str_replace(array("[url]", "[path]"), array(dirname($schema.$_SERVER["SERVER_NAME"].$port.$_SERVER["PHP_SELF"]), str_replace("\\", "/", getcwd())), $tree["data"]["templates"]["install"]["value"]));
+}]]></script>
+</data>
